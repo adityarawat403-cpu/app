@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReplyShastra</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#0f1115;
+    color:white;
+}
+
+.header{
+    padding:18px;
+    font-size:20px;
+    font-weight:bold;
+    background:#0b0d11;
+    border-bottom:1px solid #1f232b;
+    text-align:center;
+    letter-spacing:1px;
+}
+
+.chat{
+    height:78vh;
+    overflow-y:auto;
+    padding:15px;
+}
+
+.msg{
+    max-width:80%;
+    padding:12px 14px;
+    margin:8px 0;
+    border-radius:14px;
+    line-height:1.4;
+    white-space:pre-wrap;
+}
+
+.user{
+    background:#2b313c;
+    margin-left:auto;
+}
+
+.bot{
+    background:#161a21;
+    border:1px solid #2b313c;
+}
+
+.inputbox{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#0b0d11;
+    padding:10px;
+    border-top:1px solid #1f232b;
+    display:flex;
+}
+
+input{
+    flex:1;
+    padding:14px;
+    border-radius:10px;
+    border:none;
+    outline:none;
+    background:#1a1f27;
+    color:white;
+    font-size:15px;
+}
+
+button{
+    margin-left:10px;
+    padding:14px 18px;
+    border:none;
+    border-radius:10px;
+    background:#4f46e5;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#4338ca;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+ReplyShastra
+</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="inputbox">
+<input id="message" placeholder="Apni situation likh...">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+
+const chat = document.getElementById("chat");
+
+function addMessage(text, cls){
+    const div = document.createElement("div");
+    div.className = "msg " + cls;
+    div.innerText = text;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+async function sendMessage(){
+
+    const input = document.getElementById("message");
+    const text = input.value.trim();
+    if(!text) return;
+
+    addMessage(text,"user");
+    input.value="";
+
+    addMessage("Typing...","bot");
+
+    const response = await fetch("https://replyshastraai-production.up.railway.app/chat",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({message:text})
+    });
+
+    const data = await response.json();
+
+    chat.lastChild.remove();
+    addMessage(data.reply,"bot");
+}
+
+</script>
+
+</body>
+</html>
