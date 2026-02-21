@@ -1,28 +1,34 @@
 <!DOCTYPE html><html lang="en">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra AI</title><!-- ===== GOOGLE INDEXING / SEO ===== --><meta name="description" content="ReplyShastra AI - Perfect relationship reply generator. Girlfriend gussa? Seen ignore? Breakup? Get emotional reply instantly.">
-<meta name="keywords" content="reply generator, girlfriend reply, breakup reply, seen ignore reply, relationship ai chat">
-<meta name="author" content="ReplyShastra AI">
-<meta name="robots" content="index, follow"><link rel="canonical" href="https://adityarawat403-cpu.github.io/replyshastraGApp/"><!-- WhatsApp / Instagram Preview --><meta property="og:title" content="ReplyShastra AI">
-<meta property="og:description" content="Get the perfect emotional reply for any relationship situation instantly.">
-<meta property="og:image" content="https://adityarawat403-cpu.github.io/replyshastraGApp/icon.png">
-<meta property="og:url" content="https://adityarawat403-cpu.github.io/replyshastraGApp/">
-<meta property="og:type" content="website"><!-- Twitter Preview --><meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ReplyShastra AI">
-<meta name="twitter:description" content="Instant emotional replies for chats, relationships & breakups.">
-<meta name="twitter:image" content="https://adityarawat403-cpu.github.io/replyshastraGApp/icon.png"><!-- PWA SUPPORT --><link rel="manifest" href="manifest.json">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra AI - Relationship Reply Generator</title><!-- GOOGLE INDEXING (VERY IMPORTANT) --><meta name="description" content="ReplyShastra AI helps you generate perfect replies for girlfriend, crush, breakup, seen-ignore situations. Smart AI message generator.">
+<meta name="keywords" content="reply generator, girlfriend reply, breakup message, seen ignore reply, relationship AI, chat reply AI india, romantic reply generator">
+<meta name="author" content="ReplyShastra">
+<meta name="robots" content="index, follow"><!-- OpenGraph (Google + WhatsApp preview) --><meta property="og:title" content="ReplyShastra AI">
+<meta property="og:description" content="AI powered relationship reply generator. Never get ignored again.">
+<meta property="og:image" content="icon.png">
+<meta property="og:type" content="website"><!-- PWA --><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ReplyShastra"><link rel="icon" href="icon.png"><!-- Google Font --><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
+<link rel="icon" href="icon.png"><!-- Font --><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Quicksand',sans-serif;
+}
 
 body{
-background: radial-gradient(circle at center,#18002a,#050008);
 color:white;
 height:100vh;
 display:flex;
 flex-direction:column;
+background:
+linear-gradient(rgba(10,0,20,0.85),rgba(5,0,10,0.95)),
+url("https://images.unsplash.com/photo-1615818499660-30bb5816e1c7?auto=format&fit=crop&w=1200&q=80");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 }
 
 /* HEADER */
@@ -30,7 +36,6 @@ flex-direction:column;
 height:65px;
 display:flex;
 align-items:center;
-justify-content:space-between;
 padding:0 15px;
 background:rgba(0,0,0,0.4);
 backdrop-filter:blur(10px);
@@ -53,9 +58,20 @@ border-radius:10px;
 font-size:20px;
 font-weight:600;
 letter-spacing:1px;
+opacity:0;
+transform:translateY(-15px);
+animation:titleDrop 1.2s ease forwards;
 }
 
-/* CHAT AREA */
+@keyframes titleDrop{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* CHAT */
+
 .chatbox{
 flex:1;
 overflow-y:auto;
@@ -65,14 +81,12 @@ flex-direction:column;
 gap:12px;
 }
 
-/* MESSAGES */
 .msg{
 max-width:80%;
 padding:12px 14px;
 border-radius:18px;
-line-height:1.4;
+line-height:1.5;
 font-size:15px;
-animation:fadeIn .25s ease;
 white-space:pre-wrap;
 }
 
@@ -87,19 +101,14 @@ background:#1b1b24;
 border:1px solid rgba(255,255,255,0.08);
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
-}
-
 /* INPUT */
+
 .inputArea{
 display:flex;
 padding:12px;
 gap:10px;
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.55);
 backdrop-filter:blur(10px);
-border-top:1px solid rgba(255,255,255,0.05);
 }
 
 input{
@@ -119,12 +128,11 @@ border:none;
 border-radius:14px;
 background:linear-gradient(135deg,#7b2cff,#b067ff);
 color:white;
-font-size:15px;
 font-weight:600;
-cursor:pointer;
 }
 
 /* SPLASH */
+
 #splash{
 position:fixed;
 inset:0;
@@ -153,27 +161,40 @@ padding:14px 28px;
 font-size:18px;
 border-radius:18px;
 }
-</style></head><body><div id="splash">
+
+</style></head><body><!-- SPLASH --><div id="splash">
 <img src="icon.png">
 <h1>ReplyShastra</h1>
 <button class="enterBtn" onclick="enterApp()">Enter Shastra</button>
-</div><div class="header">
+</div><!-- HEADER --><div class="header">
 <div class="logo">
 <img src="icon.png">
 <span>ReplyShastra</span>
 </div>
-</div><div id="chat" class="chatbox"></div><div class="inputArea">
+</div><!-- CHAT --><div id="chat" class="chatbox"></div><!-- INPUT --><div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
 <button onclick="send()">Send</button>
-</div><audio id="sendSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=message-pop-alert-2354.mp3"></audio>
+</div><!-- SOUNDS --><audio id="sendSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=message-pop-alert-2354.mp3"></audio>
 <audio id="replySound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_88447e7f8f.mp3?filename=notification-2-269292.mp3"></audio>
 
 <script>
 
+/* UNLOCK SOUND */
+let audioUnlocked=false;
+document.addEventListener("click",()=>{
+if(!audioUnlocked){
+document.getElementById("sendSound").play().catch(()=>{});
+document.getElementById("replySound").play().catch(()=>{});
+audioUnlocked=true;
+}
+});
+
+/* ENTER */
 function enterApp(){
 document.getElementById("splash").style.display="none";
 }
 
+/* USER MESSAGE */
 function addMessage(text,type){
 let div=document.createElement("div");
 div.className="msg "+type;
@@ -182,14 +203,44 @@ document.getElementById("chat").appendChild(div);
 document.getElementById("chat").scrollTop=999999;
 }
 
+/* BOT TYPING EFFECT */
+function addBotMessage(text){
+
+let chat=document.getElementById("chat");
+let bubble=document.createElement("div");
+bubble.className="msg bot";
+chat.appendChild(bubble);
+
+let i=0;
+
+function type(){
+if(i<text.length){
+bubble.innerHTML+=text.charAt(i);
+i++;
+chat.scrollTop=999999;
+setTimeout(type,18);
+}
+}
+type();
+}
+
+/* SEND */
 async function send(){
+
 let input=document.getElementById("text");
 let msg=input.value.trim();
 if(!msg) return;
 
 addMessage(msg,"user");
-document.getElementById("sendSound").play();
+document.getElementById("sendSound").play().catch(()=>{});
 input.value="";
+
+let chat=document.getElementById("chat");
+let typing=document.createElement("div");
+typing.className="msg bot";
+typing.innerHTML="Typing...";
+chat.appendChild(typing);
+chat.scrollTop=999999;
 
 try{
 let res=await fetch("https://replyshastraai-production.up.railway.app/chat",{
@@ -199,20 +250,23 @@ body:JSON.stringify({message:msg})
 });
 
 let data=await res.json();
-addMessage(data.reply,"bot");
-document.getElementById("replySound").play();
+typing.remove();
+addBotMessage(data.reply);
 
 }catch{
-addMessage("Server busy... thodi der baad try karo.","bot");
+typing.innerHTML="Server busy... try again later.";
 }
 }
 
+/* ENTER KEY */
 document.getElementById("text").addEventListener("keypress",function(e){
 if(e.key==="Enter") send();
 });
 
+/* SERVICE WORKER */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('sw.js');
 }
+
 </script></body>
 </html>
