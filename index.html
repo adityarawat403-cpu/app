@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<title>ReplyShastra AI – Relationship Reply Generator</title>
+<title>ReplyShastra AI</title>
 
-<!-- GOOGLE INDEX + VERIFICATION -->
-<meta name="google-site-verification" content="rznJYnPQ3urHS3woTdqlZZ0ohdCoHf4GwCjjZlhM1WE" />
-<meta name="description" content="ReplyShastra helps you generate the exact message to send your girlfriend or crush. Relationship coach AI for chats, breakup, ignoring, seen zone and more.">
-<meta name="keywords" content="girlfriend reply generator, relationship ai, breakup message, seen zone reply, chat assistant, dating help ai">
+<meta name="google-site-verification" content="rznJYnPQ3urHS3woTdqlZZ0ohdCoHf4GwCjjZlhM1WE"/>
 
-<!-- PWA APP INSTALL -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b0b12">
 
 <style>
 
-*{box-sizing:border-box;}
-body{
-margin:0;
-background:#06060a;
-font-family:Trebuchet MS, sans-serif;
-color:white;
-height:100vh;
-display:flex;
-flex-direction:column;
-overflow:hidden;
+:root{
+--vh:1vh;
 }
 
-/* SPLASH SCREEN */
+body{
+margin:0;
+background:#05050a;
+font-family:Trebuchet MS, sans-serif;
+color:white;
+height:calc(var(--vh,1vh)*100);
+display:flex;
+flex-direction:column;
+}
+
+/* SPLASH */
 
 #splash{
 position:fixed;
 inset:0;
-background:radial-gradient(circle at center,#1a0028,#000000 70%);
+background:radial-gradient(circle,#200030,#000 70%);
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -43,35 +40,36 @@ justify-content:center;
 z-index:9999;
 }
 
-.logoTitle{
-font-size:44px;
+.title{
+font-size:42px;
 color:#c084ff;
-letter-spacing:5px;
+letter-spacing:4px;
 animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
-from{ text-shadow:0 0 12px #a855f7;}
-to{ text-shadow:0 0 35px #d8b4fe,0 0 55px #9333ea;}
+from{ text-shadow:0 0 10px #9333ea;}
+to{ text-shadow:0 0 35px #d8b4fe;}
 }
 
 .trishul{
-font-size:90px;
-margin:18px 0;
-animation:float 2.5s ease-in-out infinite;
+font-size:95px;
+color:silver;
+margin:20px 0;
+animation:float 2s ease-in-out infinite;
 }
 
 @keyframes float{
 0%{transform:translateY(0)}
-50%{transform:translateY(-14px)}
+50%{transform:translateY(-12px)}
 100%{transform:translateY(0)}
 }
 
-.enterBtn{
-padding:12px 32px;
-border-radius:30px;
-border:none;
+.enter{
+padding:12px 30px;
 background:#9333ea;
+border:none;
+border-radius:30px;
 color:white;
 font-size:18px;
 }
@@ -83,9 +81,8 @@ height:60px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 14px;
+padding:0 15px;
 background:#0d0d14;
-border-bottom:1px solid #1f1f25;
 }
 
 .brand{
@@ -95,18 +92,16 @@ gap:10px;
 font-size:20px;
 }
 
-.rplogo{
-background:#9333ea;
+.logo{
 width:34px;
 height:34px;
+border-radius:10px;
+background:linear-gradient(45deg,#7c3aed,#a855f7);
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:10px;
 font-weight:bold;
 }
-
-/* SIDEBAR */
 
 .menu{font-size:26px;cursor:pointer;}
 
@@ -117,7 +112,7 @@ right:-260px;
 width:260px;
 height:100%;
 background:#0d0d14;
-transition:.35s cubic-bezier(.68,-0.55,.27,1.55);
+transition:.3s;
 padding:20px;
 z-index:999;
 }
@@ -126,13 +121,12 @@ z-index:999;
 
 .sidebar button{
 width:100%;
-padding:13px;
-margin-top:12px;
+padding:14px;
+margin-top:14px;
 background:#15151f;
-color:white;
 border:none;
-border-radius:12px;
-font-size:16px;
+color:white;
+border-radius:14px;
 }
 
 /* CHAT */
@@ -164,24 +158,23 @@ background:#14141c;
 align-self:flex-start;
 }
 
-/* INPUT */
+/* INPUT FIX */
 
 .inputbox{
 display:flex;
 padding:10px;
-background:#0a0a12;
-border-top:1px solid #1c1c22;
+background:#080811;
+position:sticky;
+bottom:0;
 }
 
 input{
 flex:1;
 padding:12px;
 border:none;
-outline:none;
 border-radius:12px;
 background:#14141c;
 color:white;
-font-size:15px;
 }
 
 .send{
@@ -191,7 +184,6 @@ border:none;
 border-radius:12px;
 background:#9333ea;
 color:white;
-font-weight:bold;
 }
 
 </style>
@@ -199,17 +191,15 @@ font-weight:bold;
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
-<div class="logoTitle">ReplyShastra</div>
+<div class="title">ReplyShastra</div>
 <div class="trishul">🔱</div>
-<button class="enterBtn" onclick="enterApp()">Enter Shastra</button>
+<button class="enter" onclick="enterApp()">Enter Shastra</button>
 </div>
 
-<!-- HEADER -->
 <div class="header">
 <div class="brand">
-<div class="rplogo">RP</div>
+<div class="logo">RP</div>
 <div>ReplyShastra</div>
 </div>
 <div class="menu" onclick="toggleMenu()">☰</div>
@@ -228,24 +218,28 @@ font-weight:bold;
 <button class="send" onclick="send()">Send</button>
 </div>
 
-<!-- SOUNDS -->
-<audio id="openSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_4c0f6d86f7.mp3"></audio>
-<audio id="sendSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_2f2c6a7d0f.mp3"></audio>
-<audio id="replySound" src="https://cdn.pixabay.com/audio/2022/03/26/audio_c5b4b1a2c5.mp3"></audio>
+<audio id="click" src="https://cdn.pixabay.com/audio/2022/03/15/audio_4c0f6d86f7.mp3"></audio>
+<audio id="reply" src="https://cdn.pixabay.com/audio/2022/03/26/audio_c5b4b1a2c5.mp3"></audio>
 
 <script>
 
-let activated=false;
+const vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+function play(id){
+let a=document.getElementById(id);
+a.currentTime=0;
+a.play().catch(()=>{});
+}
 
 function enterApp(){
 document.getElementById("splash").style.display="none";
-activated=true;
-document.getElementById("openSound").play();
+play("click");
 }
 
 function toggleMenu(){
 document.getElementById("sidebar").classList.toggle("active");
-if(activated) document.getElementById("openSound").play();
+play("click");
 }
 
 const chat=document.getElementById("chat");
@@ -265,12 +259,11 @@ let text=input.value.trim();
 if(!text) return;
 
 addMessage(text,"user");
-if(activated) document.getElementById("sendSound").play();
+play("click");
 
 input.value="";
 
 try{
-
 let res=await fetch("https://replyshastraai-production.up.railway.app/chat",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
@@ -278,17 +271,14 @@ body:JSON.stringify({message:text})
 });
 
 let data=await res.json();
-
 addMessage(data.reply,"bot");
-if(activated) document.getElementById("replySound").play();
+play("reply");
 
-}catch(e){
+}catch{
 addMessage("Server busy... try again.","bot");
 }
-
 }
 
 </script>
-
 </body>
 </html>
