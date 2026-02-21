@@ -1,0 +1,15 @@
+{
+"name": "ReplyShastra AI",
+"short_name": "ReplyShastra",
+"start_url": "/",
+"display": "standalone",
+"background_color": "#05050a",
+"theme_color": "#9333ea",
+"icons": [
+{
+"src": "icon.png",
+"sizes": "512x512",
+"type": "image/png"
+}
+]
+}
