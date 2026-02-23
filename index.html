@@ -1,98 +1,128 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>ReplyShastra - AI Reply Generator</title><!-- GOOGLE INDEX --><meta name="description" content="ReplyShastra AI generates perfect relationship replies for girlfriend, crush or partner instantly.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra – AI Relationship Reply Generator</title><!-- GOOGLE INDEX (VERY IMPORTANT SEO) --><meta name="description" content="ReplyShastra AI helps you generate perfect replies for girlfriend, boyfriend and relationship chats instantly. Fix fights, handle ignoring, anger and emotional situations.">
+<meta name="keywords" content="reply generator, girlfriend reply, relationship help, chat reply AI, breakup help, what to reply, texting help">
+<meta name="author" content="ReplyShastra">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://403-cpu.github.io/replyshastraGApp/"><link rel="manifest" href="manifest.json">
+<link rel="canonical" href="https://adityarawat403-cpu.github.io/replyshastraApp/"><!-- OpenGraph (Google + WhatsApp preview) --><meta property="og:title" content="ReplyShastra AI">
+<meta property="og:description" content="Get perfect replies for relationship chats instantly.">
+<meta property="og:image" content="icon.png">
+<meta property="og:type" content="website"><!-- PWA --><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet"><style>
+<link rel="icon" href="icon.png"><!-- Google Font --><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
 
 body{
+background:#050008;
+color:white;
 height:100vh;
 display:flex;
 flex-direction:column;
-color:white;
-background:
-linear-gradient(rgba(8,0,18,.85),rgba(3,0,8,.95)),
-url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
-background-size:cover;
-background-position:center;
+overflow:hidden;
 }
 
-/* HEADER */
+/* Splash Screen */
+#splash{
+position:fixed;
+inset:0;
+background:radial-gradient(circle at center,#22003a,#050008);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:9999;
+animation:fadeIn 1s ease;
+}
 
+#splash img{
+width:140px;
+margin-bottom:20px;
+animation:glow 2s infinite alternate;
+}
+
+#titleIntro{
+font-size:34px;
+letter-spacing:6px;
+margin-bottom:25px;
+animation:slideDown 1.2s ease;
+}
+
+@keyframes slideDown{
+from{opacity:0;transform:translateY(-60px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes glow{
+from{filter:drop-shadow(0 0 10px #7b2cff);}
+to{filter:drop-shadow(0 0 30px #b067ff);}
+}
+
+.enterBtn{
+padding:14px 30px;
+border-radius:30px;
+background:linear-gradient(135deg,#7b2cff,#b067ff);
+border:none;
+color:white;
+font-size:18px;
+}
+
+/* Header */
 .header{
-height:65px;
+height:60px;
 display:flex;
 align-items:center;
-padding:0 14px;
-background:rgba(0,0,0,.55);
-backdrop-filter:blur(8px);
+gap:12px;
+padding:0 15px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(12px);
 }
 
 .menuBtn{
 font-size:26px;
 cursor:pointer;
-margin-right:12px;
-transition:.25s;
-}
-.menuBtn:active{transform:scale(.85);}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:700;
-letter-spacing:2px;
-animation:titleWave 1.2s ease;
-}
-.logo img{width:36px;height:36px;border-radius:10px;}
-
-@keyframes titleWave{
-0%{opacity:0;transform:translateY(30px);}
-100%{opacity:1;transform:translateY(0);}
 }
 
-/* DRAWER */
+.logo img{
+width:34px;
+border-radius:8px;
+}
 
-#drawer{
+/* Sidebar */
+#sidebar{
 position:fixed;
-top:0;left:-260px;
-width:260px;height:100%;
-background:#090014;
-padding:20px;
-transition:.35s;
-z-index:9999;
-}
-#drawer a{
-display:block;
-margin:18px 0;
-text-decoration:none;
-color:white;
-font-size:17px;
+left:-260px;
+top:0;
+width:260px;
+height:100%;
+background:#0b0016;
+padding:25px;
+transition:0.35s;
+z-index:9998;
 }
 
-/* CHAT */
+#sidebar.active{left:0;}
 
+#sidebar h2{margin-bottom:25px;}
+#sidebar div{margin:18px 0;}
+
+/* Chat */
 .chatbox{
 flex:1;
 overflow-y:auto;
-padding:14px;
-padding-bottom:110px;
+padding:15px 15px 90px;
 display:flex;
 flex-direction:column;
 gap:12px;
 }
 
-/* MESSAGES */
-
 .msg{
 max-width:80%;
-padding:13px 15px;
+padding:12px 14px;
 border-radius:18px;
-line-height:1.45;
-animation:fade .25s ease;
+line-height:1.4;
+font-size:15px;
+animation:fadeIn .25s ease;
 }
 
 .user{
@@ -102,47 +132,37 @@ background:linear-gradient(135deg,#7b2cff,#b067ff);
 
 .bot{
 align-self:flex-start;
-background:#171720;
-border:1px solid rgba(255,255,255,.08);
+background:#1b1b24;
+border:1px solid rgba(255,255,255,0.08);
 }
 
-@keyframes fade{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-/* TYPING */
-
+/* Typing dots */
 .typing{
 display:flex;
-gap:6px;
-padding:12px 14px;
-background:#171720;
-border-radius:18px;
-width:70px;
+gap:5px;
+padding:10px;
 }
 .dot{
-width:7px;height:7px;border-radius:50%;
-background:#aaa;
-animation:blink 1.1s infinite;
+width:8px;height:8px;border-radius:50%;background:#aaa;
+animation:blink 1.4s infinite;
 }
 .dot:nth-child(2){animation-delay:.2s;}
 .dot:nth-child(3){animation-delay:.4s;}
 @keyframes blink{
-0%{opacity:.2}50%{opacity:1}100%{opacity:.2}
+0%,80%,100%{opacity:0;}
+40%{opacity:1;}
 }
 
-/* INPUT */
-
+/* Input */
 .inputArea{
 position:fixed;
 bottom:0;
 width:100%;
-padding:10px;
 display:flex;
-gap:8px;
-background:rgba(0,0,0,.65);
-backdrop-filter:blur(10px);
+gap:10px;
+padding:10px;
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(12px);
 }
 
 input{
@@ -155,134 +175,112 @@ background:#0e0e14;
 color:white;
 }
 
-/* BUTTON */
-
 button{
-width:72px;
+padding:12px 18px;
 border:none;
-border-radius:16px;
-background:linear-gradient(135deg,#8b3dff,#b067ff);
+border-radius:14px;
+background:linear-gradient(135deg,#7b2cff,#b067ff);
 color:white;
-font-weight:700;
+font-weight:600;
 }
 
-/* SPLASH */
-
-#splash{
-position:fixed;
-inset:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-background:radial-gradient(circle,#1a0030,#020005);
-z-index:999;
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
 }
-
-#splash h1{
-font-size:36px;
-letter-spacing:5px;
-animation:titleWave 1.4s ease;
-}
-
-.enterBtn{
-margin-top:30px;
-padding:16px 40px;
-border-radius:22px;
-font-size:18px;
-}
-
-</style></head><body><div id="drawer">
-<h2>ReplyShastra</h2>
-<a href="#">Share App</a>
-<a href="#">Privacy</a>
-<a href="#">Rate App</a>
-</div><div id="splash">
-<img src="icon.png" width="120">
-<h1>REPLYSHASTRA</h1>
+</style></head><body><!-- Splash --><div id="splash">
+<img src="icon.png">
+<div id="titleIntro">REPLYSHASTRA</div>
 <button class="enterBtn" onclick="enterApp()">ENTER</button>
-</div><div class="header">
+</div><!-- Sidebar --><div id="sidebar">
+<h2>ReplyShastra</h2>
+<div>Share App</div>
+<div>Privacy</div>
+<div>Rate App</div>
+</div><!-- Header --><div class="header">
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
-<div class="logo"><img src="icon.png"><span>ReplyShastra</span></div>
+<div class="logo"><img src="icon.png"></div>
+<div>ReplyShastra</div>
 </div><div id="chat" class="chatbox"></div><div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
 <button onclick="send()">Send</button>
-</div><audio id="sendSound" src="send.mp3"></audio>
+</div><!-- AUDIO --><audio id="sendSound" src="send.mp3"></audio>
 <audio id="replySound" src="reply.mp3"></audio>
 <audio id="typingSound" src="typing.mp3" loop></audio>
 
 <script>
 
-/* UNLOCK AUDIO */
-document.body.addEventListener("click",()=>{
-sendSound.play().catch(()=>{});
-replySound.play().catch(()=>{});
-typingSound.play().catch(()=>{});
-typingSound.pause();
-},{once:true});
-
-/* MENU */
-function toggleMenu(){
-let d=document.getElementById("drawer");
-d.style.left=d.style.left=="0px"?"-260px":"0px";
-}
-
-/* ENTER */
+/* Splash */
 function enterApp(){
 document.getElementById("splash").style.display="none";
 }
 
-/* SEND */
+/* Sidebar */
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("active");
+}
+
+/* Unlock Audio (mobile fix) */
+let audioUnlocked=false;
+function unlockAudio(){
+if(audioUnlocked) return;
+["sendSound","replySound","typingSound"].forEach(id=>{
+let s=document.getElementById(id);
+s.volume=0;
+s.play().then(()=>{s.pause();s.currentTime=0;s.volume=1;});
+});
+audioUnlocked=true;
+}
+document.addEventListener("click",unlockAudio);
+document.addEventListener("touchstart",unlockAudio);
+
+/* Message */
 function send(){
-let msg=text.value.trim();
+let input=document.getElementById("text");
+let msg=input.value.trim();
 if(!msg) return;
 
 addMessage(msg,"user");
-sendSound.currentTime=0;
-sendSound.play();
+document.getElementById("sendSound").play();
+input.value="";
 
-text.value="";
-showTyping();
+/* typing */
+let typing=document.createElement("div");
+typing.className="msg bot typing";
+typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+document.getElementById("chat").appendChild(typing);
+document.getElementById("typingSound").play();
 
 setTimeout(()=>{
-removeTyping();
-let reply="She feels ignored. Try:\nHey… I wasn’t avoiding you. I just got busy. Talk to me ❤️";
+typing.remove();
+document.getElementById("typingSound").pause();
+
+let reply=generateReply(msg);
 addMessage(reply,"bot");
-replySound.currentTime=0;
-replySound.play();
-},1500);
+document.getElementById("replySound").play();
+},1600);
 }
 
-function addMessage(t,type){
+/* add msg */
+function addMessage(text,type){
 let div=document.createElement("div");
 div.className="msg "+type;
-div.innerText=t;
-chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
+div.innerText=text;
+document.getElementById("chat").appendChild(div);
+document.getElementById("chat").scrollTop=999999;
 }
 
-/* TYPING */
-
-function showTyping(){
-typingSound.currentTime=0;
-typingSound.play();
-
-let div=document.createElement("div");
-div.className="typing";
-div.id="typing";
-div.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
+/* Demo AI */
+function generateReply(text){
+return "She feels ignored. Try:\nHey... I wasn’t avoiding you. I just got busy. Talk to me ❤️";
 }
 
-function removeTyping(){
-typingSound.pause();
-let t=document.getElementById("typing");
-if(t)t.remove();
-}
+/* Enter key */
+document.getElementById("text").addEventListener("keypress",e=>{
+if(e.key==="Enter") send();
+});
 
-text.addEventListener("keypress",e=>{if(e.key==="Enter")send();});
-
+/* Service worker */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('sw.js');
 }
