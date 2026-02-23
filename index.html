@@ -1,117 +1,169 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="en"><!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra</title><!-- GOOGLE INDEX (VERY IMPORTANT) --><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for chats, WhatsApp, Instagram and more.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://adityarawat403-cpu.github.io/replyshastraAapp/"><!-- PWA --><link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png"><!-- Font --><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
+<title>ReplyShastra – AI Relationship Reply Generator</title>
+
+<!-- GOOGLE INDEX -->
+<meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
+<meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">
+<meta name="robots" content="index, follow">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7b2cff">
+<link rel="icon" href="icon.png">
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Quicksand',sans-serif;
+}
 
 body{
-background:linear-gradient(rgba(10,0,20,.92),rgba(5,0,10,.96)),
-url('weapon-bg.png');
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
+background:#050008;
 color:white;
 height:100vh;
-display:flex;
-flex-direction:column;
 overflow:hidden;
 }
 
 /* SPLASH */
+
 #splash{
 position:fixed;
 inset:0;
-background:radial-gradient(circle,#21003a,#050008);
+background:radial-gradient(circle at center,#22003a,#050008);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 z-index:9999;
-transition:.6s;
+text-align:center;
 }
 
-#logo{
-width:140px;
-filter:drop-shadow(0 0 25px #a855ff);
-animation:pulse 2s infinite alternate;
+#splash img{
+width:130px;
+margin-bottom:20px;
+animation:glow 2s infinite alternate;
 }
 
-@keyframes pulse{
-from{transform:scale(.95);opacity:.85;}
-to{transform:scale(1.05);opacity:1;}
+@keyframes glow{
+from{filter:drop-shadow(0 0 8px #7b2cff);}
+to{filter:drop-shadow(0 0 25px #b067ff);}
 }
 
-#enterBtn{
-margin-top:25px;
-padding:14px 32px;
-border-radius:30px;
-border:none;
+.title{
+font-size:34px;
+letter-spacing:6px;
+margin-bottom:30px;
+opacity:0;
+animation:titleIn 1.4s forwards;
+}
+
+@keyframes titleIn{
+from{transform:translateY(40px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
+
+/* SILVER TRISHUL BUTTON */
+
+.enterBtn{
+padding:16px 38px;
 font-size:18px;
-font-weight:600;
+border-radius:22px;
+border:none;
 color:white;
-background:linear-gradient(135deg,#a855ff,#6d28d9);
-box-shadow:0 0 25px #7b2cff;
+background:linear-gradient(135deg,#bfbfbf,#7b2cff);
+box-shadow:0 0 25px rgba(123,44,255,.7);
+cursor:pointer;
+transition:.3s;
+}
+
+.enterBtn:active{
+transform:scale(.95);
 }
 
 /* HEADER */
+
 .header{
-height:60px;
+height:65px;
 display:flex;
 align-items:center;
-padding:0 15px;
 gap:12px;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(8px);
+padding:0 15px;
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(10px);
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:5;
 }
 
-.menu{
+.menuBtn{
 font-size:26px;
 cursor:pointer;
 }
 
-/* SIDE MENU */
-#drawer{
+.logo img{
+width:34px;
+border-radius:10px;
+}
+
+/* MENU */
+
+.sideMenu{
 position:fixed;
-left:-260px;
 top:0;
+left:-260px;
 width:260px;
 height:100%;
-background:linear-gradient(#140020,#070010);
-padding:25px 18px;
+background:#120020;
+padding:80px 25px;
 transition:.35s;
-z-index:2000;
+z-index:10;
 }
 
-#drawer.active{left:0;}
-
-.drawerItem{
-padding:14px 0;
-font-size:17px;
-border-bottom:1px solid rgba(255,255,255,.08);
+.sideMenu a{
+display:block;
+margin:20px 0;
+font-size:18px;
+text-decoration:none;
+color:white;
 }
 
-/* CHAT */
+/* CHAT AREA */
+
 .chatbox{
-flex:1;
+position:absolute;
+top:70px;
+bottom:80px;
+left:0;
+right:0;
 overflow-y:auto;
 padding:15px;
 display:flex;
 flex-direction:column;
 gap:12px;
+background:url('weapon-bg.png') center/cover no-repeat fixed;
 }
 
+/* MESSAGES */
+
 .msg{
-max-width:80%;
-padding:12px 14px;
+max-width:78%;
+padding:12px 15px;
 border-radius:18px;
 font-size:15px;
-line-height:1.4;
-animation:fade .25s ease;
+animation:fade .25s;
 }
 
 .user{
@@ -122,33 +174,39 @@ background:linear-gradient(135deg,#7b2cff,#b067ff);
 .bot{
 align-self:flex-start;
 background:#1b1b24;
-border:1px solid rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.1);
 }
 
 @keyframes fade{
-from{opacity:0;transform:translateY(10px);}
+from{opacity:0;transform:translateY(8px);}
 to{opacity:1;transform:translateY(0);}
 }
 
 /* INPUT */
+
 .inputArea{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
 display:flex;
 gap:10px;
 padding:12px;
-background:rgba(0,0,0,.5);
+background:rgba(0,0,0,.6);
+backdrop-filter:blur(10px);
 }
 
 input{
 flex:1;
 padding:14px;
-border:none;
-outline:none;
 border-radius:14px;
+border:none;
 background:#0e0e14;
 color:white;
+outline:none;
 }
 
-button{
+button.sendBtn{
 padding:12px 18px;
 border:none;
 border-radius:14px;
@@ -157,53 +215,89 @@ color:white;
 font-weight:600;
 }
 
-</style></head><body><!-- SPLASH --><div id="splash">
-<img id="logo" src="icon.png">
-<button id="enterBtn">ENTER</button>
-</div><!-- DRAWER --><div id="drawer">
-<div class="drawerItem">Share App</div>
-<div class="drawerItem">Privacy</div>
-<div class="drawerItem">Rate App</div>
-</div><!-- HEADER --><div class="header">
-<div class="menu" onclick="toggleMenu()">☰</div>
+/* typing dots */
+
+.typing{
+display:flex;
+gap:4px;
+padding:10px 14px;
+background:#1b1b24;
+border-radius:18px;
+width:60px;
+}
+
+.dot{
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+animation:blink 1.2s infinite;
+}
+
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+
+@keyframes blink{
+0%,80%,100%{opacity:.2}
+40%{opacity:1}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="icon.png">
+<div class="title">REPLYSHASTRA</div>
+<button class="enterBtn" onclick="enterApp()">ENTER</button>
+</div>
+
+<!-- MENU -->
+<div id="menu" class="sideMenu">
+<a href="#">Share App</a>
+<a href="#">Privacy</a>
+<a href="#">Rate App</a>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
+<div class="logo"><img src="icon.png"></div>
 <div>ReplyShastra</div>
-</div><!-- CHAT --><div id="chat" class="chatbox"></div><!-- INPUT --><div class="inputArea">
+</div>
+
+<!-- CHAT -->
+<div id="chat" class="chatbox"></div>
+
+<!-- INPUT -->
+<div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
-<button onclick="send()">Send</button>
-</div><!-- AUDIO --><audio id="enterSound" src="send.mp3"></audio>
+<button class="sendBtn" onclick="send()">Send</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="intro" src="intro.mp3"></audio>
 <audio id="sendSound" src="send.mp3"></audio>
 <audio id="replySound" src="reply.mp3"></audio>
+<audio id="typingSound" src="typing.mp3" loop></audio>
 
 <script>
 
-/* ENTER */
-document.getElementById("enterBtn").onclick=()=>{
-document.getElementById("enterSound").play();
-setTimeout(()=>{document.getElementById("splash").style.display="none";},500);
-}
-
 /* MENU */
 function toggleMenu(){
-document.getElementById("drawer").classList.toggle("active");
+let m=document.getElementById("menu");
+m.style.left = (m.style.left==="0px") ? "-260px" : "0px";
 }
 
-/* SEND */
-function send(){
-let input=document.getElementById("text");
-let msg=input.value.trim();
-if(!msg)return;
-
-addMessage(msg,"user");
-document.getElementById("sendSound").play();
-input.value="";
-
-setTimeout(()=>{
-let reply="I understand your situation. Try:\nHey... I wasn’t avoiding you. I just got busy. Talk to me ❤️";
-addMessage(reply,"bot");
-document.getElementById("replySound").play();
-},900);
+/* ENTER */
+function enterApp(){
+document.getElementById("intro").play();
+document.getElementById("splash").style.display="none";
 }
 
+/* MESSAGE ADD */
 function addMessage(text,type){
 let div=document.createElement("div");
 div.className="msg "+type;
@@ -212,10 +306,46 @@ document.getElementById("chat").appendChild(div);
 document.getElementById("chat").scrollTop=999999;
 }
 
+/* SEND */
+function send(){
+
+let input=document.getElementById("text");
+let msg=input.value.trim();
+if(!msg)return;
+
+addMessage(msg,"user");
+document.getElementById("sendSound").play();
+input.value="";
+
+/* typing */
+let typing=document.createElement("div");
+typing.className="typing";
+typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+document.getElementById("chat").appendChild(typing);
+document.getElementById("typingSound").play();
+
+setTimeout(()=>{
+typing.remove();
+document.getElementById("typingSound").pause();
+document.getElementById("replySound").play();
+
+let reply="I understand your situation. Try:\n\nHey… I didn’t want to reply casually. I actually wanted to talk properly. Are you okay ❤️";
+addMessage(reply,"bot");
+
+},1500);
+}
+
+/* ENTER KEY */
+document.getElementById("text").addEventListener("keypress",e=>{
+if(e.key==="Enter")send();
+});
+
 /* SERVICE WORKER */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('sw.js');
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
