@@ -13,6 +13,7 @@ body{
 background:#050008;
 color:white;
 height:100vh;
+overflow:hidden;
 }
 
 /* SPLASH */
@@ -39,19 +40,41 @@ to{filter:drop-shadow(0 0 28px #b067ff);}
 }
 
 .title{
-font-size:34px;
-letter-spacing:6px;
+font-size:36px;
+letter-spacing:8px;
 margin:25px 0;
+background:linear-gradient(90deg,#ffffff,#caa8ff,#ffffff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 18px rgba(160,120,255,.6);
+animation:titleGlow 2.5s infinite alternate;
 }
 
+@keyframes titleGlow{
+from{filter:drop-shadow(0 0 10px #7b2cff);}
+to{filter:drop-shadow(0 0 30px #caa8ff);}
+}
+
+/* TRISHUL BUTTON */
+
 .enterBtn{
-padding:16px 40px;
-border-radius:22px;
+position:relative;
+padding:18px 46px;
+border-radius:28px;
 border:none;
-background:linear-gradient(135deg,#bfbfbf,#7b2cff);
+font-size:20px;
+letter-spacing:3px;
 color:white;
-font-size:18px;
-box-shadow:0 0 25px rgba(123,44,255,.8);
+background:linear-gradient(145deg,#dcdcdc,#7b2cff);
+box-shadow:0 0 28px rgba(140,90,255,.9);
+}
+
+.enterBtn::before{
+content:"🔱";
+position:absolute;
+left:16px;
+font-size:22px;
+filter:drop-shadow(0 0 8px #fff);
 }
 
 /* HEADER */
@@ -68,11 +91,10 @@ gap:12px;
 padding:0 15px;
 background:rgba(0,0,0,.55);
 backdrop-filter:blur(12px);
-z-index:50;
+z-index:60;
 }
 
 .menuBtn{font-size:26px;cursor:pointer;}
-
 .logo img{width:34px;border-radius:10px;}
 
 /* SIDE MENU */
@@ -87,6 +109,7 @@ background:#140021;
 padding:90px 25px;
 transition:.35s;
 z-index:100;
+pointer-events:auto;
 }
 
 .sideMenu a{
@@ -95,6 +118,17 @@ margin:22px 0;
 font-size:18px;
 text-decoration:none;
 color:white;
+}
+
+/* overlay */
+
+#menuOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(4px);
+display:none;
+z-index:55;
 }
 
 /* CHAT */
@@ -110,6 +144,7 @@ padding:15px;
 display:flex;
 flex-direction:column;
 gap:12px;
+z-index:1;
 
 background-image:url("./weapon-bg.png");
 background-size:cover;
@@ -177,6 +212,8 @@ color:white;
 font-weight:600;
 }
 
+/* typing dots */
+
 .typing{
 display:flex;
 gap:4px;
@@ -202,45 +239,50 @@ animation:blink 1.2s infinite;
 40%{opacity:1}
 }
 
-</style></head><body><div id="splash">
+</style></head><body><!-- SPLASH --><div id="splash">
 <img src="icon.png">
 <div class="title">REPLYSHASTRA</div>
 <button class="enterBtn" onclick="enterApp()">ENTER</button>
-</div><div id="menu" class="sideMenu">
+</div><!-- MENU --><div id="menu" class="sideMenu">
 <a href="#">Share App</a>
 <a href="#">Privacy</a>
 <a href="#">Rate App</a>
-</div><div class="header">
+<hr style="opacity:.2;margin:25px 0;">
+<a href="#" onclick="alert('Login system coming soon')">Login</a>
+<a href="#" onclick="alert('Create account coming soon')">Create Account</a>
+</div><div id="menuOverlay"></div><!-- HEADER --><div class="header">
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
 <div class="logo"><img src="icon.png"></div>
 <div>ReplyShastra</div>
-</div><div id="chat" class="chatbox"></div><div class="inputArea">
+</div><!-- CHAT --><div id="chat" class="chatbox"></div><!-- INPUT --><div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
 <button class="sendBtn" onclick="send()">Send</button>
-</div><audio id="intro" src="intro.mp3"></audio>
+</div><!-- AUDIO --><audio id="intro" src="intro.mp3"></audio>
 <audio id="sendSound" src="send.mp3"></audio>
 <audio id="replySound" src="reply.mp3"></audio>
+<audio id="typingSound" src="typing.mp3" preload="auto"></audio>
 
 <script>
 
 let menuOpen=false;
 
-/* MENU */
+/* MENU TOGGLE */
 function toggleMenu(){
 const menu=document.getElementById("menu");
+const overlay=document.getElementById("menuOverlay");
+
 menuOpen=!menuOpen;
-menu.style.left=menuOpen?"0":"-260px";
+
+if(menuOpen){
+menu.style.left="0";
+overlay.style.display="block";
+}else{
+menu.style.left="-260px";
+overlay.style.display="none";
+}
 }
 
-/* CLICK OUTSIDE CLOSE */
-document.addEventListener("click",function(e){
-const menu=document.getElementById("menu");
-const btn=document.querySelector(".menuBtn");
-if(menuOpen && !menu.contains(e.target) && !btn.contains(e.target)){
-menu.style.left="-260px";
-menuOpen=false;
-}
-});
+document.getElementById("menuOverlay").onclick=toggleMenu;
 
 /* ENTER APP */
 function enterApp(){
@@ -249,7 +291,7 @@ document.getElementById("intro").play().catch(()=>{});
 document.getElementById("splash").style.display="none";
 }
 
-/* ADD MSG */
+/* ADD MESSAGE */
 function addMessage(text,type){
 let div=document.createElement("div");
 div.className="msg "+type;
@@ -260,6 +302,7 @@ document.getElementById("chat").scrollTop=999999;
 
 /* SEND */
 function send(){
+
 let input=document.getElementById("text");
 let msg=input.value.trim();
 if(!msg)return;
@@ -270,25 +313,33 @@ document.getElementById("sendSound").play();
 
 input.value="";
 
-/* typing */
+/* typing animation */
 let typing=document.createElement("div");
 typing.className="typing";
 typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
 document.getElementById("chat").appendChild(typing);
 
+document.getElementById("typingSound").currentTime=0;
+document.getElementById("typingSound").play().catch(()=>{});
+
 setTimeout(()=>{
 typing.remove();
+document.getElementById("typingSound").pause();
+
 document.getElementById("replySound").currentTime=0;
 document.getElementById("replySound").play();
 
 addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply casually. I actually wanted to talk properly. Are you okay ❤️","bot");
+
 },1400);
 }
 
+/* ENTER KEY */
 document.getElementById("text").addEventListener("keypress",e=>{
 if(e.key==="Enter")send();
 });
 
+/* SERVICE WORKER */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('sw.js');
 }
