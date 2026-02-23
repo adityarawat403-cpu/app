@@ -1,11 +1,17 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra – AI Relationship Reply Generator</title><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra – AI Relationship Reply Generator</title><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
 <meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">
 <meta name="robots" content="index, follow"><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
+
 <link rel="icon" href="icon.png"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
-body{background:#050008;color:white;height:100vh;overflow:hidden;}/* SPLASH */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}body{
+background:#050008;
+color:white;
+height:100dvh;   /* FIXED MOBILE HEIGHT */
+overflow:hidden;
+}
+
+/* SPLASH */
 #splash{position:fixed;inset:0;background:radial-gradient(circle at center,#22003a,#050008);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;}
 #splash img{width:130px;animation:glow 2s infinite alternate;}
 @keyframes glow{from{filter:drop-shadow(0 0 8px #7b2cff);}to{filter:drop-shadow(0 0 28px #b067ff);}}
@@ -30,6 +36,11 @@ z-index:9998;
 opacity:0;
 pointer-events:none;
 transition:opacity .8s ease;
+
+/* IMPORTANT FIX */
+padding:20px;
+text-align:center;
+overflow:hidden;
 }
 
 #introScreen.show{
@@ -37,17 +48,24 @@ opacity:1;
 pointer-events:auto;
 }
 
+/* RESPONSIVE TEXT FIX */
 .introText{
-font-size:22px;
-letter-spacing:6px;
-color:#aaa;
-margin-bottom:12px;
+font-size:clamp(14px,4vw,22px);
+letter-spacing:4px;
+color:#bbb;
+margin-bottom:14px;
 animation:introFade 1.2s ease;
+text-align:center;
+padding:0 12px;
 }
 
 .introBrand{
-font-size:42px;
-letter-spacing:10px;
+font-size:clamp(26px,9vw,44px);
+letter-spacing:6px;
+line-height:1.25;
+word-break:break-word;
+text-align:center;
+padding:0 18px;
 background:linear-gradient(90deg,#ffffff,#b067ff,#ffffff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
@@ -103,7 +121,7 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 <img src="icon.png">
 <div class="title">REPLYSHASTRA</div>
 <button class="enterBtn" onclick="enterApp()">ENTER</button>
-</div><!-- CINEMATIC SCREEN --><div id="introScreen">
+</div><div id="introScreen">
 <div class="introText">WELCOME TO</div>
 <div class="introBrand">REPLYSHASTRA</div>
 </div><div id="menu" class="sideMenu">
@@ -125,7 +143,6 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 <audio id="typingSound" src="typing.mp3" preload="auto"></audio>
 
 <script>
-
 let menuOpen=false;
 
 function toggleMenu(){
@@ -137,9 +154,7 @@ overlay.style.display=menuOpen?"block":"none";
 }
 document.getElementById("menuOverlay").onclick=toggleMenu;
 
-/* ===== NEW ENTER FLOW ===== */
 function enterApp(){
-
 const splash=document.getElementById("splash");
 const intro=document.getElementById("intro");
 const introScreen=document.getElementById("introScreen");
@@ -148,49 +163,23 @@ intro.currentTime=0;
 intro.play().catch(()=>{});
 
 splash.style.display="none";
-
-/* show cinematic */
 introScreen.classList.add("show");
 
-/* after 3 sec open app */
 setTimeout(()=>{
 introScreen.style.opacity="0";
-setTimeout(()=>{
-introScreen.style.display="none";
-},700);
+setTimeout(()=>{introScreen.style.display="none";},700);
 },3000);
 }
 
-/* MENU ACTIONS */
 function shareApp(){
-navigator.share({
-title:"ReplyShastra",
-text:"ReplyShastra 🔱 AI Relationship Reply Generator",
-url:"https://adityarawat403-cpu.github.io/"
-}).catch(()=>alert("Sharing not supported"));
+navigator.share({title:"ReplyShastra",text:"ReplyShastra 🔱 AI Relationship Reply Generator",url:"https://adityarawat403-cpu.github.io/"}).catch(()=>alert("Sharing not supported"));
 }
+function rateApp(){window.open("https://adityarawat403-cpu.github.io/","_blank");}
+function privacyPage(){alert("Privacy policy page will be added soon.");}
+function showPremium(){alert("🔥 ReplyShastra Premium\n\nUnlimited replies\nBreakup recovery replies\nSeen-ignore expert mode\nPriority AI");}
+function loginInfo(){alert("Account system launching soon 🚀");}
+function signupInfo(){alert("Create account feature coming soon 👤");}
 
-function rateApp(){
-window.open("https://adityarawat403-cpu.github.io/","_blank");
-}
-
-function privacyPage(){
-alert("Privacy policy page will be added soon.");
-}
-
-function showPremium(){
-alert("🔥 ReplyShastra Premium\n\nUnlimited replies\nBreakup recovery replies\nSeen-ignore expert mode\nPriority AI");
-}
-
-function loginInfo(){
-alert("Account system launching soon 🚀");
-}
-
-function signupInfo(){
-alert("Create account feature coming soon 👤");
-}
-
-/* CHAT */
 function addMessage(text,type){
 let div=document.createElement("div");
 div.className="msg "+type;
@@ -231,10 +220,8 @@ addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply
 
 text.addEventListener("keypress",e=>{if(e.key==="Enter")send();});
 
-/* SERVICE WORKER */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('sw.js');
 navigator.serviceWorker.getRegistrations().then(regs=>{regs.forEach(r=>r.update());});
 }
-
 </script></body></html>
