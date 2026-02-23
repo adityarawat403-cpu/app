@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://adityarawat403-cpu.github.io/replyshastraGApp/sitemap.xml
+Sitemap: https://adityarawat403-cpu.github.io/sitemap.xml
