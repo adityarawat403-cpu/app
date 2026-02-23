@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ReplyShastra – AI Relationship Reply Generator</title>
-
-<meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra – AI Relationship Reply Generator</title><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
 <meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">
-<meta name="robots" content="index, follow">
-
-<link rel="manifest" href="manifest.json">
+<meta name="robots" content="index, follow"><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
+<link rel="icon" href="icon.png"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
 body{background:#050008;color:white;height:100vh;overflow:hidden;}
 
@@ -84,59 +73,60 @@ animation:logoPulse 2.4s ease-in-out infinite;
 .user{align-self:flex-end;background:linear-gradient(135deg,#7b2cff,#b067ff);}
 .bot{align-self:flex-start;background:#1b1b24;border:1px solid rgba(255,255,255,.1);}
 
+/* TYPING DOTS */
+.typing{
+align-self:flex-start;
+background:#1b1b24;
+padding:10px 14px;
+border-radius:18px;
+display:flex;
+gap:5px;
+width:60px;
+}
+.dot{
+width:6px;height:6px;background:#fff;border-radius:50%;
+animation:blink 1.2s infinite;
+}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
 /* INPUT */
 .inputArea{position:fixed;bottom:0;left:0;right:0;display:flex;gap:10px;padding:12px;background:rgba(0,0,0,.65);backdrop-filter:blur(12px);}
 input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;color:white;outline:none;}
 .sendBtn{padding:12px 18px;border:none;border-radius:14px;background:linear-gradient(135deg,#7b2cff,#b067ff);color:white;font-weight:600;}
-</style>
-</head>
-
-<body>
-
-<div id="splash">
+</style></head><body><div id="splash">
 <img src="icon.png">
 <div class="title">REPLYSHASTRA</div>
 <button class="enterBtn" onclick="enterApp()">ENTER</button>
-</div>
-
-<div id="introScreen">
+</div><div id="introScreen">
 <div class="introText">WELCOME TO</div>
 <div class="introBrand">REPLYSHASTRA</div>
-</div>
-
-<!-- 🔥 MENU WITH ALL OPTIONS -->
-<div id="menu" class="sideMenu">
+</div><div id="menu" class="sideMenu">
 <a href="#" onclick="shareApp()">Share App</a>
 <a href="#" onclick="privacyPage()">Privacy</a>
 <a href="#" onclick="rateApp()">Rate App</a>
-
 <hr style="opacity:.2;margin:25px 0;">
-
 <a href="#" onclick="showPremium()">Subscription</a>
 <a href="#" onclick="loginInfo()">Login</a>
 <a href="#" onclick="signupInfo()">Create Account</a>
-</div>
-
-<div id="menuOverlay"></div>
-
-<div class="header">
+</div><div id="menuOverlay"></div><div class="header">
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
 <div class="logo"><img src="icon.png"></div>
 <div>ReplyShastra</div>
-</div>
-
-<div id="chat" class="chatbox"></div>
-
-<div class="inputArea">
+</div><div id="chat" class="chatbox"></div><div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
 <button class="sendBtn" onclick="send()">Send</button>
-</div>
-
-<audio id="intro" src="intro.mp3"></audio>
+</div><audio id="intro" src="intro.mp3"></audio>
 <audio id="sendSound" src="send.mp3"></audio>
 <audio id="replySound" src="reply.mp3"></audio>
 <audio id="typingSound" src="typing.mp3" preload="auto" loop></audio>
+
 <script>
+
+const chat=document.getElementById("chat");
+const text=document.getElementById("text");
+const typingAudio=document.getElementById("typingSound");
 
 let menuOpen=false;
 function toggleMenu(){
@@ -148,7 +138,6 @@ overlay.style.display=menuOpen?"block":"none";
 }
 document.getElementById("menuOverlay").onclick=toggleMenu;
 
-/* ENTER FLOW */
 function enterApp(){
 intro.play().catch(()=>{});
 splash.style.display="none";
@@ -156,39 +145,54 @@ introScreen.classList.add("show");
 setTimeout(()=>{introScreen.style.display="none";},3000);
 }
 
-/* MENU ACTIONS */
 function shareApp(){
-navigator.share({
-title:"ReplyShastra",
-text:"ReplyShastra 🔱 AI Relationship Reply Generator",
-url:location.href
-}).catch(()=>alert("Sharing not supported"));
+navigator.share({title:"ReplyShastra",text:"ReplyShastra 🔱",url:location.href}).catch(()=>alert("Sharing not supported"));
 }
-
-function rateApp(){
-window.open(location.href,"_blank");
-}
-
+function rateApp(){window.open(location.href,"_blank");}
 function privacyPage(){alert("Privacy page coming soon");}
 function showPremium(){alert("🔥 Premium coming soon");}
 function loginInfo(){alert("Login system coming soon");}
 function signupInfo(){alert("Create account soon");}
 
-function addMessage(text,type){
+function addMessage(textMsg,type){
 let div=document.createElement("div");
 div.className="msg "+type;
-div.innerText=text;
+div.innerText=textMsg;
 chat.appendChild(div);
 chat.scrollTop=999999;
+}
+
+function showTyping(){
+let typing=document.createElement("div");
+typing.className="typing";
+typing.id="typingBox";
+typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+chat.appendChild(typing);
+chat.scrollTop=999999;
+
+typingAudio.currentTime=0;
+typingAudio.play().catch(()=>{});
+}
+
+function hideTyping(){
+let t=document.getElementById("typingBox");
+if(t)t.remove();
+typingAudio.pause();
+typingAudio.currentTime=0;
 }
 
 function send(){
 let msg=text.value.trim();
 if(!msg)return;
+
 addMessage(msg,"user");
 sendSound.play();
 text.value="";
+
+showTyping();
+
 setTimeout(()=>{
+hideTyping();
 replySound.play();
 addMessage("I understand your situation ❤️","bot");
 },2000);
@@ -199,6 +203,5 @@ navigator.serviceWorker.register('sw.js');
 navigator.serviceWorker.getRegistrations().then(r=>r.forEach(x=>x.update()));
 }
 
-</script>
-</body>
+</script></body>
 </html>
