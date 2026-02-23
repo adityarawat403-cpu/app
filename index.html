@@ -1,38 +1,18 @@
-<!DOCTYPE html><html lang="en"><!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ReplyShastra – AI Relationship Reply Generator</title>
-
-<!-- GOOGLE INDEX -->
-<meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra – AI Relationship Reply Generator</title><!-- SEO GOOGLE INDEX --><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
 <meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">
-<meta name="robots" content="index, follow">
-
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
+<meta name="robots" content="index, follow"><!-- PWA --><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png">
+<link rel="icon" href="icon.png"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Quicksand',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
 
 body{
 background:#050008;
 color:white;
 height:100vh;
-overflow:hidden;
 }
 
 /* SPLASH */
@@ -46,79 +26,56 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 z-index:9999;
-text-align:center;
 }
 
 #splash img{
 width:130px;
-margin-bottom:20px;
 animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
 from{filter:drop-shadow(0 0 8px #7b2cff);}
-to{filter:drop-shadow(0 0 25px #b067ff);}
+to{filter:drop-shadow(0 0 28px #b067ff);}
 }
 
 .title{
 font-size:34px;
 letter-spacing:6px;
-margin-bottom:30px;
-opacity:0;
-animation:titleIn 1.4s forwards;
+margin:25px 0;
 }
-
-@keyframes titleIn{
-from{transform:translateY(40px);opacity:0;}
-to{transform:translateY(0);opacity:1;}
-}
-
-/* SILVER TRISHUL BUTTON */
 
 .enterBtn{
-padding:16px 38px;
-font-size:18px;
+padding:16px 40px;
 border-radius:22px;
 border:none;
-color:white;
 background:linear-gradient(135deg,#bfbfbf,#7b2cff);
-box-shadow:0 0 25px rgba(123,44,255,.7);
-cursor:pointer;
-transition:.3s;
-}
-
-.enterBtn:active{
-transform:scale(.95);
+color:white;
+font-size:18px;
+box-shadow:0 0 25px rgba(123,44,255,.8);
 }
 
 /* HEADER */
 
 .header{
+position:fixed;
+top:0;
+left:0;
+right:0;
 height:65px;
 display:flex;
 align-items:center;
 gap:12px;
 padding:0 15px;
-background:rgba(0,0,0,.5);
-backdrop-filter:blur(10px);
-position:fixed;
-top:0;
-left:0;
-right:0;
-z-index:5;
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(12px);
+z-index:50;
 }
 
-.menuBtn{
-font-size:26px;
-cursor:pointer;
-}
+.menuBtn{font-size:26px;cursor:pointer;}
 
-.logo img{
-width:34px;
-border-radius:10px;
-}
+.logo img{width:34px;border-radius:10px;}
 
-/* MENU */
+/* SIDE MENU */
 
 .sideMenu{
 position:fixed;
@@ -126,26 +83,26 @@ top:0;
 left:-260px;
 width:260px;
 height:100%;
-background:#120020;
-padding:80px 25px;
+background:#140021;
+padding:90px 25px;
 transition:.35s;
-z-index:10;
+z-index:100;
 }
 
 .sideMenu a{
 display:block;
-margin:20px 0;
+margin:22px 0;
 font-size:18px;
 text-decoration:none;
 color:white;
 }
 
-/* CHAT AREA */
+/* CHAT */
 
 .chatbox{
-position:absolute;
-top:70px;
-bottom:80px;
+position:fixed;
+top:65px;
+bottom:78px;
 left:0;
 right:0;
 overflow-y:auto;
@@ -153,10 +110,14 @@ padding:15px;
 display:flex;
 flex-direction:column;
 gap:12px;
-background:url('weapon-bg.png') center/cover no-repeat fixed;
+
+background-image:url("./weapon-bg.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
 }
 
-/* MESSAGES */
+/* MESSAGE */
 
 .msg{
 max-width:78%;
@@ -192,8 +153,9 @@ right:0;
 display:flex;
 gap:10px;
 padding:12px;
-background:rgba(0,0,0,.6);
-backdrop-filter:blur(10px);
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(12px);
+z-index:40;
 }
 
 input{
@@ -206,7 +168,7 @@ color:white;
 outline:none;
 }
 
-button.sendBtn{
+.sendBtn{
 padding:12px 18px;
 border:none;
 border-radius:14px;
@@ -214,8 +176,6 @@ background:linear-gradient(135deg,#7b2cff,#b067ff);
 color:white;
 font-weight:600;
 }
-
-/* typing dots */
 
 .typing{
 display:flex;
@@ -242,62 +202,54 @@ animation:blink 1.2s infinite;
 40%{opacity:1}
 }
 
-</style>
-</head>
-
-<body>
-
-<!-- SPLASH -->
-<div id="splash">
+</style></head><body><div id="splash">
 <img src="icon.png">
 <div class="title">REPLYSHASTRA</div>
 <button class="enterBtn" onclick="enterApp()">ENTER</button>
-</div>
-
-<!-- MENU -->
-<div id="menu" class="sideMenu">
+</div><div id="menu" class="sideMenu">
 <a href="#">Share App</a>
 <a href="#">Privacy</a>
 <a href="#">Rate App</a>
-</div>
-
-<!-- HEADER -->
-<div class="header">
+</div><div class="header">
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
 <div class="logo"><img src="icon.png"></div>
 <div>ReplyShastra</div>
-</div>
-
-<!-- CHAT -->
-<div id="chat" class="chatbox"></div>
-
-<!-- INPUT -->
-<div class="inputArea">
+</div><div id="chat" class="chatbox"></div><div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
 <button class="sendBtn" onclick="send()">Send</button>
-</div>
-
-<!-- AUDIO -->
-<audio id="intro" src="intro.mp3"></audio>
+</div><audio id="intro" src="intro.mp3"></audio>
 <audio id="sendSound" src="send.mp3"></audio>
 <audio id="replySound" src="reply.mp3"></audio>
-<audio id="typingSound" src="typing.mp3" loop></audio>
 
 <script>
 
+let menuOpen=false;
+
 /* MENU */
 function toggleMenu(){
-let m=document.getElementById("menu");
-m.style.left = (m.style.left==="0px") ? "-260px" : "0px";
+const menu=document.getElementById("menu");
+menuOpen=!menuOpen;
+menu.style.left=menuOpen?"0":"-260px";
 }
 
-/* ENTER */
+/* CLICK OUTSIDE CLOSE */
+document.addEventListener("click",function(e){
+const menu=document.getElementById("menu");
+const btn=document.querySelector(".menuBtn");
+if(menuOpen && !menu.contains(e.target) && !btn.contains(e.target)){
+menu.style.left="-260px";
+menuOpen=false;
+}
+});
+
+/* ENTER APP */
 function enterApp(){
-document.getElementById("intro").play();
+document.getElementById("intro").currentTime=0;
+document.getElementById("intro").play().catch(()=>{});
 document.getElementById("splash").style.display="none";
 }
 
-/* MESSAGE ADD */
+/* ADD MSG */
 function addMessage(text,type){
 let div=document.createElement("div");
 div.className="msg "+type;
@@ -308,13 +260,14 @@ document.getElementById("chat").scrollTop=999999;
 
 /* SEND */
 function send(){
-
 let input=document.getElementById("text");
 let msg=input.value.trim();
 if(!msg)return;
 
 addMessage(msg,"user");
+document.getElementById("sendSound").currentTime=0;
 document.getElementById("sendSound").play();
+
 input.value="";
 
 /* typing */
@@ -322,30 +275,23 @@ let typing=document.createElement("div");
 typing.className="typing";
 typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
 document.getElementById("chat").appendChild(typing);
-document.getElementById("typingSound").play();
 
 setTimeout(()=>{
 typing.remove();
-document.getElementById("typingSound").pause();
+document.getElementById("replySound").currentTime=0;
 document.getElementById("replySound").play();
 
-let reply="I understand your situation. Try:\n\nHey… I didn’t want to reply casually. I actually wanted to talk properly. Are you okay ❤️";
-addMessage(reply,"bot");
-
-},1500);
+addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply casually. I actually wanted to talk properly. Are you okay ❤️","bot");
+},1400);
 }
 
-/* ENTER KEY */
 document.getElementById("text").addEventListener("keypress",e=>{
 if(e.key==="Enter")send();
 });
 
-/* SERVICE WORKER */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('sw.js');
 }
 
-</script>
-
-</body>
+</script></body>
 </html>
