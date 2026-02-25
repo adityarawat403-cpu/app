@@ -188,6 +188,13 @@ intro.play().catch(()=>{});
 splash.style.display="none";
 introScreen.classList.add("show");
 
+/* ---- CLICK UNLOCK FIX ---- */
+document.body.style.overflow="auto";
+introScreen.style.pointerEvents="none";
+introScreen.style.display="none";
+
+setTimeout(()=>{
+
 setTimeout(()=>{
 introScreen.classList.remove("show");
 setTimeout(()=>{introScreen.style.display="none";document.body.style.overflow="auto";},600);
