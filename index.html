@@ -1,10 +1,17 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ReplyShastra – AI Relationship Reply Generator</title><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ReplyShastra – AI Relationship Reply Generator</title>
+
+<meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
 <meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">
-<meta name="robots" content="index, follow"><link rel="manifest" href="manifest.json">
+<meta name="robots" content="index, follow">
+
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
 <link rel="icon" href="icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
 body{background:#050008;color:white;height:100vh;overflow:hidden;}
 
@@ -52,14 +59,22 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 .typing{display:flex;gap:4px;padding:10px 14px;background:#1b1b24;border-radius:18px;width:60px;}
 .dot{width:6px;height:6px;background:white;border-radius:50%;animation:blink 1.2s infinite;}
 @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
-</style></head><body><div id="splash">
+</style></head>
+
+<body>
+
+<div id="splash">
 <img src="icon.png">
 <div class="title">REPLYSHASTRA</div>
 <button class="enterBtn" id="enterBtn">ENTER</button>
-</div><div id="introScreen">
+</div>
+
+<div id="introScreen">
 <div class="introText">WELCOME TO</div>
 <div class="introBrand">REPLYSHASTRA</div>
-</div><div id="menu" class="sideMenu">
+</div>
+
+<div id="menu" class="sideMenu">
 <a href="#" onclick="shareApp()">Share App</a>
 <a href="#" onclick="privacyPage()">Privacy</a>
 <a href="#" onclick="rateApp()">Rate App</a>
@@ -67,21 +82,31 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 <a href="#" onclick="showPremium()">Subscription</a>
 <a href="#" onclick="loginInfo()">Login</a>
 <a href="#" onclick="signupInfo()">Create Account</a>
-</div><div id="menuOverlay"></div><div class="header">
+</div>
+
+<div id="menuOverlay"></div>
+
+<div class="header">
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
 <div class="logo"><img src="icon.png"></div>
 <div>ReplyShastra</div>
-</div><div id="chat" class="chatbox"></div><div class="inputArea">
+</div>
+
+<div id="chat" class="chatbox"></div>
+
+<div class="inputArea">
 <input id="text" placeholder="Describe your situation...">
 <button class="sendBtn" onclick="send()">Send</button>
-</div><audio id="intro" src="intro.mp3"></audio>
-<audio id="sendSound" src="send.mp3"></audio>
-<audio id="replySound" src="reply.mp3"></audio>
-<audio id="typingSound" src="typing.mp3"></audio>
+</div>
+
+<audio id="intro" src="intro.mp3" preload="auto"></audio>
+<audio id="sendSound" src="send.mp3" preload="auto"></audio>
+<audio id="replySound" src="reply.mp3" preload="auto"></audio>
+<audio id="typingSound" src="typing.mp3" preload="auto"></audio>
 
 <script>
 
-/* MOBILE AUDIO UNLOCK (REAL FIX) */
+/* ===== AUDIO UNLOCK (REAL MOBILE FIX) ===== */
 function unlockAudio(){
 document.querySelectorAll("audio").forEach(a=>{
 a.muted=true;
@@ -104,13 +129,13 @@ overlay.style.display=menuOpen?"block":"none";
 }
 document.getElementById("menuOverlay").onclick=toggleMenu;
 
-/* ENTER FIX (GHOST LAYER REMOVAL) */
+/* ENTER BUTTON (TOUCH FIX) */
 const enterBtn=document.getElementById("enterBtn");
 const splash=document.getElementById("splash");
 const introScreen=document.getElementById("introScreen");
 const intro=document.getElementById("intro");
 
-enterBtn.addEventListener("click",()=>{
+enterBtn.addEventListener("touchstart",()=>{
 unlockAudio();
 
 intro.currentTime=0;
@@ -120,17 +145,11 @@ splash.style.display="none";
 introScreen.classList.add("show");
 
 setTimeout(()=>{
-introScreen.style.opacity="0";
-introScreen.style.pointerEvents="none";
-
-/* MOST IMPORTANT */
-setTimeout(()=>{
-introScreen.remove();
+introScreen.classList.remove("show");
+introScreen.style.display="none";
 document.body.style.overflow="auto";
-},700);
-
-},2500);
-});
+},3000);
+},{passive:true});
 
 /* CHAT */
 const chat=document.getElementById("chat");
@@ -139,7 +158,10 @@ const sendSound=document.getElementById("sendSound");
 const replySound=document.getElementById("replySound");
 const typingSound=document.getElementById("typingSound");
 
-function play(s){s.currentTime=0;s.play().catch(()=>{});}
+function play(s){
+s.currentTime=0;
+s.play().catch(()=>{});
+}
 
 function addMessage(t,type){
 let div=document.createElement("div");
@@ -177,6 +199,14 @@ addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply
 }
 
 text.addEventListener("keypress",e=>{if(e.key==="Enter")send();});
+
+/* SHARE */
+function shareApp(){navigator.share({title:"ReplyShastra",text:"ReplyShastra 🔱 AI Relationship Reply Generator",url:location.href}).catch(()=>{});}
+function rateApp(){window.open(location.href,"_blank");}
+function privacyPage(){alert("Privacy policy page will be added soon.");}
+function showPremium(){alert("ReplyShastra Premium coming soon");}
+function loginInfo(){alert("Account system launching soon");}
+function signupInfo(){alert("Create account feature coming soon");}
 
 /* SERVICE WORKER */
 if('serviceWorker' in navigator){
