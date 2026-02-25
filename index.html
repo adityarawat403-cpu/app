@@ -1,159 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ReplyShastra – AI Relationship Reply Generator</title>
-
-<meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ReplyShastra – AI Relationship Reply Generator</title><meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
 <meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">
-<meta name="robots" content="index, follow">
-<meta name="google-site-verification" content="rznJYnPQ3urHS3woTdqlZZ0ohdCoHf4GwCjjZlhM1WE" />
-
-<link rel="manifest" href="manifest.json">
+<meta name="robots" content="index, follow"><!-- GOOGLE INDEX --><meta name="google-site-verification" content="rznJYnPQ3urHS3woTdqlZZ0ohdCoHf4GwCjjZlhM1WE"/><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}
-body{background:#050008;color:white;height:100vh;overflow:hidden;}
-
-/* SPLASH */
-#splash{
-position:fixed;inset:0;
-background:radial-gradient(circle at center,#22003a,#050008);
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-z-index:9999;
-}
-.title{
-font-size:36px;letter-spacing:8px;margin:25px 0;
-background:linear-gradient(90deg,#fff,#caa8ff,#fff);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
-text-shadow:0 0 20px #7b2cff;
-}
-.enterBtn{
-padding:18px 52px;border-radius:28px;border:none;
-font-size:20px;letter-spacing:3px;color:white;
-background:linear-gradient(145deg,#dcdcdc,#7b2cff);
-box-shadow:0 0 28px rgba(140,90,255,.9);
-}
-
-/* HEADER */
-.header{
-position:fixed;top:0;left:0;right:0;height:65px;
-display:flex;align-items:center;padding:0 15px;
-background:rgba(0,0,0,.55);backdrop-filter:blur(12px);
-z-index:50;
-}
-.menuBtn{font-size:26px;cursor:pointer}
-
-/* MENU */
-.sideMenu{
-position:fixed;top:0;left:-260px;width:260px;height:100%;
-background:#140021;padding:90px 25px;transition:.3s;z-index:100;
-}
-.sideMenu.show{left:0;}
-
-#menuOverlay{
-position:fixed;inset:0;background:rgba(0,0,0,.6);
-display:none;z-index:90;
-}
-#menuOverlay.show{display:block}
-
-/* CHAT */
-.chatbox{
-position:fixed;top:65px;bottom:78px;left:0;right:0;
-overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px;
-background:#050008;
-}
-.msg{max-width:78%;padding:12px 15px;border-radius:18px;font-size:15px;}
-.user{align-self:flex-end;background:linear-gradient(135deg,#7b2cff,#b067ff);}
-.bot{align-self:flex-start;background:#1b1b24;border:1px solid rgba(255,255,255,.1);}
-
-/* INPUT */
-.inputArea{
-position:fixed;bottom:0;left:0;right:0;
-display:flex;gap:10px;padding:12px;
-background:rgba(0,0,0,.65);backdrop-filter:blur(12px);
-}
-input{
-flex:1;padding:14px;border-radius:14px;border:none;
-background:#0e0e14;color:white;outline:none;
-}
-.sendBtn{
-padding:12px 18px;border:none;border-radius:14px;
-background:linear-gradient(135deg,#7b2cff,#b067ff);
-color:white;font-weight:600;
-}
-</style>
-</head>
-
-<body>
-
-<!-- SPLASH -->
-<div id="splash">
-<div class="title">ReplyShastra</div>
-<button class="enterBtn" onclick="enterApp()">ENTER</button>
-</div>
-
-<!-- HEADER -->
-<div class="header">
-<div class="menuBtn" onclick="openMenu()">☰</div>
-</div>
-
-<!-- MENU -->
-<div id="menuOverlay" onclick="closeMenu()"></div>
-<div id="sideMenu" class="sideMenu">
-<a href="#">About</a>
-<a href="#">Privacy</a>
-<a href="#">Contact</a>
-</div>
-
-<!-- CHAT -->
-<div id="chatbox" class="chatbox"></div>
-
-<!-- INPUT -->
-<div class="inputArea">
-<input id="userInput" placeholder="Type message...">
-<button class="sendBtn" onclick="sendMessage()">Send</button>
-</div>
-
-<script>
-function enterApp(){
-document.getElementById("splash").style.display="none";
-}
-
-function openMenu(){
-document.getElementById("sideMenu").classList.add("show");
-document.getElementById("menuOverlay").classList.add("show");
-}
-
-function closeMenu(){
-document.getElementById("sideMenu").classList.remove("show");
-document.getElementById("menuOverlay").classList.remove("show");
-}
-
-function sendMessage(){
-let input=document.getElementById("userInput");
-if(!input.value.trim())return;
-let msg=document.createElement("div");
-msg.className="msg user";
-msg.innerText=input.value;
-document.getElementById("chatbox").appendChild(msg);
-input.value="";
-}
-
-/* SERVICE WORKER FIX */
+<link rel="icon" href="icon.png"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><script>
+/* ===== REPLYSHASTRA PWA CRITICAL FIX ===== */
 if ('serviceWorker' in navigator) {
-window.addEventListener('load', function () {
-navigator.serviceWorker.register('./sw.js').catch(()=>{});
-});
-}
-</script>
+  window.addEventListener('load', () => {
 
+    // remove old broken service workers
+    navigator.serviceWorker.getRegistrations().then(regs=>{
+      regs.forEach(reg=>{
+        if(!reg.scope.includes('/app/')){
+          reg.unregister();
+        }
+      });
+    });
+
+    // register correct worker
+    navigator.serviceWorker.register('/app/sw.js',{scope:'/app/'})
+    .then(reg=>console.log("ReplyShastra SW Active:",reg.scope))
+    .catch(err=>console.log("SW ERROR:",err));
+
+  });
+}
+</script></head>
+<body>
 </body>
-</html
+</html>
