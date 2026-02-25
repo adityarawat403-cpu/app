@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ReplyShastra – AI Relationship Reply Generator</title>
 
 <meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">
@@ -41,6 +41,10 @@ z-index:9998;
 opacity:0;
 pointer-events:none;
 transition:opacity .8s ease;
+
+/* ADD THIS ↓ */
+padding:20px;
+text-align:center;
 }
 
 #introScreen.show{
@@ -48,9 +52,28 @@ opacity:1;
 pointer-events:auto;
 }
 
-.introText{font-size:22px;letter-spacing:6px;color:#aaa;margin-bottom:12px;}
-.introBrand{font-size:42px;letter-spacing:10px;background:linear-gradient(90deg,#ffffff,#b067ff,#ffffff);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 25px #7b2cff;}
+.introText{
+font-size:clamp(14px,4vw,22px);
+letter-spacing:clamp(2px,1.5vw,6px);
+color:#aaa;
+margin-bottom:12px;
+text-align:center;
+padding:0 10px;
+animation:introFade 1.2s ease;
+}
+
+.introBrand{
+font-size:clamp(26px,9vw,42px);
+letter-spacing:clamp(4px,2.5vw,10px);
+text-align:center;
+padding:0 12px;
+word-break:break-word;
+background:linear-gradient(90deg,#ffffff,#b067ff,#ffffff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 25px #7b2cff;
+animation:introGlow 2s infinite alternate;
+}
 
 /* HEADER */
 .header{position:fixed;top:0;left:0;right:0;height:65px;display:flex;align-items:center;gap:12px;padding:0 15px;background:rgba(0,0,0,.55);backdrop-filter:blur(12px);z-index:60;}
@@ -129,14 +152,13 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 
 /* ---------- AUDIO MOBILE FIX ---------- */
 let unlocked=false;
-function unlockAudio(){
+function
 if(unlocked) return;
 unlocked=true;
 document.querySelectorAll("audio").forEach(a=>{
 a.play().then(()=>{a.pause();a.currentTime=0;}).catch(()=>{});
 });
 }
-document.body.addEventListener("touchstart",unlockAudio,true);
 
 /* ---------- MENU ---------- */
 let menuOpen=false;
@@ -147,8 +169,18 @@ menuOpen=!menuOpen;
 menu.style.left=menuOpen?"0":"-260px";
 overlay.style.display=menuOpen?"block":"none";
 }
-menuOverlay.onclick=toggleMenu;
-
+document.getElementById("menuOverlay").onclick=toggleMenu;
+document.body.addEventListener("click",()=>{
+  const sounds = [intro, sendSound, replySound, typingSound];
+  sounds.forEach(s=>{
+    s.muted=true;
+    s.play().then(()=>{
+      s.pause();
+      s.currentTime=0;
+      s.muted=false;
+    }).catch(()=>{});
+  });
+},{once:true});
 /* ---------- ENTER ---------- */
 function enterApp(){
 unlockAudio();
@@ -186,7 +218,8 @@ typing.className="typing";
 typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
 chat.appendChild(typing);
 
-play(typingSound);
+typingSound.currentTime = 0;
+typingSound.play().catch(()=>{});
 
 setTimeout(()=>{
 typing.remove();
