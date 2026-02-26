@@ -48,7 +48,7 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 <hr style="opacity:.2;margin:25px 0;">      
 <a href="javascript:void(0)" onclick="showPremium()">Subscription</a>      
 <a href="javascript:void(0)" onclick="loginWithGoogle()">Login</a>      
-<a href="javascript:void(0)" onclick="signupInfo()">Create Account</a>      
+<a href="javascript:void(0)" onclick="logoutUser()">Logout</a>      
 </div>  <div id="menuOverlay"></div>  <div class="header">      
 <div class="menuBtn" onclick="toggleMenu()">☰</div>      
 <div class="logo"><img src="icon.png"></div>      
@@ -205,14 +205,20 @@ navigator.serviceWorker.register('sw.js');
   <!-- FIREBASE LOGIN SYSTEM -->
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { initializeApp } from "https://gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7lMo",
+  apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
   authDomain: "replyshastra.firebaseapp.com",
   projectId: "replyshastra",
-  storageBucket: "replyshastra.firebasestorage.app",
+  storageBucket: "replyshastra.appspot.com",
   messagingSenderId: "346754998835",
   appId: "1:346754998835:web:ecca09c1bb98a5f9a7f946"
 };
@@ -221,24 +227,33 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-window.loginWithGoogle = function() {
+
+// LOGIN
+window.loginWithGoogle = function () {
   signInWithPopup(auth, provider)
     .then((result) => {
-      alert("Login successful! Welcome " + result.user.displayName);
+      alert("Welcome " + result.user.displayName);
+      console.log("Logged in:", result.user.email);
     })
     .catch((error) => {
-      alert("Login failed");
+      alert("Login Error: " + error.message);
       console.log(error);
     });
-}
+};
 
-window.logoutUser = function() {
-  signOut(auth);
-}
 
+// LOGOUT
+window.logoutUser = function () {
+  signOut(auth).then(() => {
+    alert("Logged out");
+  });
+};
+
+
+// AUTO LOGIN DETECT
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User logged in:", user.email);
+    console.log("User:", user.email);
   } else {
     console.log("No user");
   }
