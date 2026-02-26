@@ -177,8 +177,17 @@ addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply
 text.addEventListener("keypress",e=>{if(e.key==="Enter")send();});
 
 /* SHARE */
-function shareApp(){navigator.share({title:"ReplyShastra",text:"ReplyShastra 🔱 AI Relationship Reply Generator",url:location.href}).catch(()=>{});}
-function rateApp(){window.open(location.href,"_blank");}
+function shareApp(){
+if(navigator.share){
+navigator.share({
+title:"ReplyShastra 🔱",
+text:"Try ReplyShastra – AI Relationship Reply Generator. Ye sach me chats ka jawab banata hai 💘",
+url:"https://adityarawat403-cpu.github.io/app/"
+}).catch(()=>{});
+}else{
+alert("Sharing not supported in this device");
+}
+  }
 function privacyPage(){alert("Privacy policy page will be added soon.");}
 function showPremium(){alert("ReplyShastra Premium coming soon");}
 function loginInfo(){alert("Account system launching soon");}
