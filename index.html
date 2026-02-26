@@ -92,5 +92,54 @@ onAuthStateChanged(auth,user=>{
   console.log("User logged:",user.email);
  }
 });
-</script></body>
+  <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
+  authDomain: "replyshastra.firebaseapp.com",
+  projectId: "replyshastra",
+  storageBucket: "replyshastra.appspot.com",
+  messagingSenderId: "346754998835",
+  appId: "1:346754998835:web:ecca09c1bb98a5f9a7f946"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+/* LOGIN BUTTON FUNCTION */
+window.loginWithGoogle = function(){
+  signInWithRedirect(auth, provider);
+};
+
+/* AFTER RETURN FROM GOOGLE */
+getRedirectResult(auth).then(result=>{
+  if(result?.user){
+    alert("Welcome " + result.user.displayName);
+  }
+});
+
+/* LOGOUT */
+window.logoutUser = function(){
+  signOut(auth).then(()=>alert("Logged out"));
+};
+
+/* AUTO LOGIN */
+onAuthStateChanged(auth,user=>{
+  if(user){
+    console.log("User:",user.email);
+  }
+});
+</script>
+</body>
 </html>
