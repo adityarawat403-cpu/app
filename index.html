@@ -202,18 +202,20 @@ navigator.serviceWorker.register('sw.js');
 }
 </script>
 
-  <!-- FIREBASE LOGIN SYSTEM -->
+ <!-- FIREBASE LOGIN SYSTEM FIXED -->
 <script type="module">
 
-import { initializeApp } from "https://gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged
-} from "https://gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+/* CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
   authDomain: "replyshastra.firebaseapp.com",
@@ -227,41 +229,36 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-provider.addScope('email');
-
-provider.setCustomParameters({
-  client_id: "346754998835-73m7jztl7omaiiso3uu2sce0veumethc.apps.googleusercontent.com",
-  prompt: "select_account"
-});
-  
-// LOGIN
+/* LOGIN BUTTON */
 window.loginWithGoogle = function () {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      alert("Welcome " + result.user.displayName);
-      console.log("Logged in:", result.user.email);
-    })
-    .catch((error) => {
-      alert("Login Error: " + error.message);
-      console.log(error);
-    });
+  signInWithRedirect(auth, provider);
 };
 
+/* AFTER REDIRECT (VERY IMPORTANT) */
+getRedirectResult(auth)
+  .then((result) => {
+    if (result && result.user) {
+      alert("Welcome " + result.user.displayName);
+      console.log("Logged in:", result.user.email);
+    }
+  })
+  .catch((error) => {
+    console.log("Redirect error:", error);
+  });
 
-// LOGOUT
+/* LOGOUT */
 window.logoutUser = function () {
   signOut(auth).then(() => {
-    alert("Logged out");
+    alert("Logged out successfully");
   });
 };
 
-
-// AUTO LOGIN DETECT
+/* AUTO LOGIN DETECT */
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User:", user.email);
+    console.log("Active user:", user.email);
   } else {
-    console.log("No user");
+    console.log("No user logged in");
   }
 });
 
