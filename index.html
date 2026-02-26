@@ -1,145 +1,269 @@
-<!DOCTYPE html><html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ReplyShastra – AI Relationship Reply Generator</title><link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png"><style>
-body{background:#050008;color:white;font-family:sans-serif;margin:0}
-.header{position:fixed;top:0;left:0;right:0;height:60px;background:#140021;display:flex;align-items:center;padding:0 15px;z-index:5}
-.menuBtn{font-size:26px;cursor:pointer;margin-right:12px}
-.sideMenu{position:fixed;top:0;left:-260px;width:260px;height:100%;background:#140021;padding:80px 20px;transition:.3s;z-index:10}
-.sideMenu a{display:block;color:white;text-decoration:none;margin:18px 0}
-#menuOverlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:9}
-.chatbox{margin-top:60px;padding:15px}
-.inputArea{position:fixed;bottom:0;left:0;right:0;background:#140021;padding:10px;display:flex}
-input{flex:1;padding:12px;border-radius:10px;border:none;background:#0e0e14;color:white}
-button{margin-left:8px;padding:12px;border:none;border-radius:10px;background:#7b2cff;color:white}
-</style></head><body><div id="menu" class="sideMenu">
-<a href="#" onclick="loginWithGoogle()">Login with Google</a>
-<a href="#" onclick="logoutUser()">Logout</a>
-</div><div id="menuOverlay"></div><div class="header">
-<div class="menuBtn" onclick="toggleMenu()">☰</div>
-<div>ReplyShastra</div>
-</div><div id="chat" class="chatbox"></div><div class="inputArea">
-<input id="text" placeholder="Type message...">
-<button onclick="send()">Send</button>
-</div><script>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    <title>ReplyShastra – AI Relationship Reply Generator</title>  <meta name="description" content="ReplyShastra AI helps you generate perfect relationship replies for girlfriend, breakup, seen-ignore, emotional chats and love conversations.">      <meta name="keywords" content="reply generator, girlfriend reply, breakup text, seen ignore message, love reply ai, relationship assistant">      
+<meta name="robots" content="index, follow">  <link rel="manifest" href="manifest.json">      
+<meta name="theme-color" content="#7b2cff">      
+<link rel="icon" href="icon.png">      
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">  <style>      
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Quicksand',sans-serif;}      
+body{background:#050008;color:white;height:100vh;overflow:hidden;}      
+#splash{position:fixed;inset:0;background:radial-gradient(circle at center,#22003a,#050008);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;}      
+#splash img{width:130px;}      
+.title{font-size:36px;letter-spacing:8px;margin:25px 0;background:linear-gradient(90deg,#ffffff,#caa8ff,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}      
+.enterBtn{position:relative;padding:18px 52px;border-radius:28px;border:none;font-size:20px;letter-spacing:3px;color:white;background:linear-gradient(145deg,#dcdcdc,#7b2cff);}      
+.enterBtn::before{content:"🔱";position:absolute;left:16px;font-size:22px;}    #introScreen{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;opacity:0;pointer-events:none;transition:opacity .8s ease;padding:20px;text-align:center;}  
+#introScreen.show{opacity:1;pointer-events:auto;}  
+.introText{font-size:20px;color:#aaa;margin-bottom:12px;}  
+.introBrand{font-size:34px;background:linear-gradient(90deg,#ffffff,#b067ff,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 25px #7b2cff;}  .header{position:fixed;top:0;left:0;right:0;height:65px;display:flex;align-items:center;gap:12px;padding:0 15px;background:rgba(0,0,0,.55);z-index:60;}
+.menuBtn{font-size:26px;cursor:pointer;}
+.logo img{width:34px;border-radius:10px;}
+
+.sideMenu{position:fixed;top:0;left:-260px;width:260px;height:100%;background:#140021;padding:90px 25px;transition:.35s;z-index:100;}
+.sideMenu a{display:block;margin:22px 0;font-size:18px;text-decoration:none;color:white;}
+#menuOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;z-index:55;}
+
+.chatbox{position:fixed;top:65px;bottom:78px;left:0;right:0;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px;background-image:url("./weapon-bg.png");background-size:cover;background-position:center;background-repeat:no-repeat;}
+.msg{max-width:78%;padding:12px 15px;border-radius:18px;font-size:15px;}
+.user{align-self:flex-end;background:linear-gradient(135deg,#7b2cff,#b067ff);}
+.bot{align-self:flex-start;background:#1b1b24;border:1px solid rgba(255,255,255,.1);}
+
+.inputArea{position:fixed;bottom:0;left:0;right:0;display:flex;gap:10px;padding:12px;background:rgba(0,0,0,.65);}
+input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;color:white;}
+.sendBtn{padding:12px 18px;border:none;border-radius:14px;background:linear-gradient(135deg,#7b2cff,#b067ff);color:white;font-weight:600;}
+
+.typing{display:flex;gap:4px;padding:10px 14px;background:#1b1b24;border-radius:18px;width:60px;}
+.dot{width:6px;height:6px;background:white;border-radius:50%;animation:blink 1.2s infinite;}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+</style></head>  <body>  <div id="splash">
+<img src="icon.png">
+
+<div class="title">REPLYSHASTRA</div>      
+<button class="enterBtn" id="enterBtn">ENTER</button>      
+</div>  <div id="introScreen">      
+<div class="introText">WELCOME TO</div>      
+<div class="introBrand">REPLYSHASTRA</div>      
+</div>  <div id="menu" class="sideMenu">      
+<a href="javascript:void(0)" onclick="shareApp()">Share App</a>      
+<a href="javascript:void(0)" onclick="privacyPage()">Privacy</a>  
+<a href="terms.html">Terms & Conditions</a>
+<a href="javascript:void(0)" onclick="rateApp()">Rate App</a>      
+<hr style="opacity:.2;margin:25px 0;">      
+<a href="javascript:void(0)" onclick="showPremium()">Subscription</a>      
+<a href="javascript:void(0)" onclick="loginWithGoogle()">Login</a>      
+<a href="javascript:void(0)" onclick="logoutUser()">Logout</a>      
+</div>  <div id="menuOverlay"></div>  <div class="header">      
+<div class="menuBtn" onclick="toggleMenu()">☰</div>      
+<div class="logo"><img src="icon.png"></div>      
+<div>ReplyShastra</div>      
+</div>  <div id="chat" class="chatbox"></div>  <div class="inputArea">      
+<input id="text" placeholder="Describe your situation...">      
+<button class="sendBtn" onclick="send()">Send</button>      
+</div>  <audio id="intro" src="intro.mp3" preload="auto"></audio>    
+<audio id="sendSound" src="send.mp3" preload="auto"></audio>    
+<audio id="replySound" src="reply.mp3" preload="auto"></audio>    
+<audio id="typingSound" src="typing.mp3" preload="auto"></audio>  <script>      /* ===== GLOBAL AUDIO UNLOCK (MAIN FIX) ===== */
+let audioUnlocked=false;
+document.addEventListener("click",()=>{
+if(audioUnlocked) return;
+audioUnlocked=true;
+document.querySelectorAll("audio").forEach(a=>{
+a.muted=true;
+let p=a.play();
+if(p!==undefined){
+p.then(()=>{
+a.pause();
+a.currentTime=0;
+a.muted=false;
+});
+}
+});
+},{once:true});
+
+/* MENU */
 let menuOpen=false;
 function toggleMenu(){
-const m=document.getElementById("menu");
-const o=document.getElementById("menuOverlay");
+const menu=document.getElementById("menu");
+const overlay=document.getElementById("menuOverlay");
 menuOpen=!menuOpen;
-m.style.left=menuOpen?"0":"-260px";
-o.style.display=menuOpen?"block":"none";
+menu.style.left=menuOpen?"0":"-260px";
+overlay.style.display=menuOpen?"block":"none";
 }
 document.getElementById("menuOverlay").onclick=toggleMenu;
 
-function send(){
-let txt=document.getElementById("text");
-if(!txt.value.trim())return;
-let d=document.createElement("div");
-d.innerText=txt.value;
-document.getElementById("chat").appendChild(d);
-txt.value="";
+/* ENTER BUTTON */
+const enterBtn=document.getElementById("enterBtn");
+const splash=document.getElementById("splash");
+const introScreen=document.getElementById("introScreen");
+const intro=document.getElementById("intro");
+
+enterBtn.addEventListener("pointerdown",()=>{
+
+/* FORCE AUDIO UNLOCK */
+document.querySelectorAll("audio").forEach(a=>{
+try{
+a.muted=true;
+let p=a.play();
+if(p!==undefined){
+p.then(()=>{
+a.pause();
+a.currentTime=0;
+a.muted=false;
+a.volume=1;
+});
 }
-</script><!-- FIREBASE LOGIN --><script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
-  authDomain: "replyshastra.firebaseapp.com",
-  projectId: "replyshastra",
-  storageBucket: "replyshastra.appspot.com",
-  messagingSenderId: "346754998835",
-  appId: "1:346754998835:web:ecca09c1bb98a5f9a7f946"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-/* LOGIN */
-window.loginWithGoogle = function(){
-  signInWithRedirect(auth,provider);
-};
-
-/* RETURN AFTER GOOGLE LOGIN */
-getRedirectResult(auth)
-.then(result=>{
- if(result?.user){
-  alert("Welcome "+result.user.displayName);
- }
-}).catch(e=>console.log(e));
-
-/* LOGOUT */
-window.logoutUser=function(){
- signOut(auth).then(()=>alert("Logged out"));
-};
-
-/* AUTO LOGIN */
-onAuthStateChanged(auth,user=>{
- if(user){
-  console.log("User logged:",user.email);
- }
+}catch(e){}
 });
-  <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+/* PLAY INTRO */
+setTimeout(()=>{
+intro.currentTime=0;
+intro.muted=false;
+intro.volume=1;
+intro.play().catch(()=>{});
+},120);
 
-const firebaseConfig = {
-  apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
-  authDomain: "replyshastra.firebaseapp.com",
-  projectId: "replyshastra",
-  storageBucket: "replyshastra.appspot.com",
-  messagingSenderId: "346754998835",
-  appId: "1:346754998835:web:ecca09c1bb98a5f9a7f946"
-};
+splash.style.display="none";
+introScreen.classList.add("show");
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+setTimeout(()=>{
+introScreen.classList.remove("show");
+introScreen.style.display="none";
+document.body.style.overflow="auto";
+},3000);
 
-/* LOGIN BUTTON FUNCTION */
-window.loginWithGoogle = function(){
-  signInWithRedirect(auth, provider);
-};
+},{passive:true});
 
-/* AFTER RETURN FROM GOOGLE */
-getRedirectResult(auth).then(result=>{
-  if(result?.user){
-    alert("Welcome " + result.user.displayName);
+/* CHAT */
+const chat=document.getElementById("chat");
+const text=document.getElementById("text");
+const sendSound=document.getElementById("sendSound");
+const replySound=document.getElementById("replySound");
+const typingSound=document.getElementById("typingSound");
+
+function play(s){s.currentTime=0;s.play().catch(()=>{});}
+
+function addMessage(t,type){
+let div=document.createElement("div");
+div.className="msg "+type;
+div.innerText=t;
+chat.appendChild(div);
+chat.scrollTop=chat.scrollHeight;
+}
+
+function send(){
+let msg=text.value.trim();
+if(!msg)return;
+
+addMessage(msg,"user");
+play(sendSound);
+text.value="";
+
+let typing=document.createElement("div");
+typing.className="typing";
+typing.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+chat.appendChild(typing);
+
+play(typingSound);
+
+setTimeout(()=>{
+typing.remove();
+typingSound.pause();
+play(replySound);
+
+setTimeout(()=>{
+addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply casually. I actually wanted to talk properly. Are you okay ❤️","bot");
+},400);
+
+},2600);
+}
+
+text.addEventListener("keypress",e=>{if(e.key==="Enter")send();});
+
+/* SHARE */
+function shareApp(){
+if(navigator.share){
+navigator.share({
+title:"ReplyShastra 🔱",
+text:"Never get stuck on a reply again.\nDescribe your situation — get the perfect message.\nReplyShastra 💬 https://adityarawat403-cpu.github.io/app/",
+url:"https://adityarawat403-cpu.github.io/app/"
+}).catch(()=>{});
+}else{
+alert("Sharing not supported in this device");
+}
   }
-});
-
-/* LOGOUT */
-window.logoutUser = function(){
-  signOut(auth).then(()=>alert("Logged out"));
-};
-
-/* AUTO LOGIN */
-onAuthStateChanged(auth,user=>{
-  if(user){
-    console.log("User:",user.email);
+function privacyPage(){
+window.open("privacy.html","_blank");
   }
-});
+function showPremium(){alert("ReplyShastra Premium coming soon");}
+function loginInfo(){alert("Account system launching soon");}
+function signupInfo(){alert("Create account feature coming soon");}
+
+/* SERVICE WORKER */
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('sw.js');
+}
 </script>
-</body>
-</html>
+
+  <!-- FIREBASE LOGIN SYSTEM -->
+<script type="module">
+
+import { initializeApp } from "https://gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
+  authDomain: "replyshastra.firebaseapp.com",
+  projectId: "replyshastra",
+  storageBucket: "replyshastra.appspot.com",
+  messagingSenderId: "346754998835",
+  appId: "1:346754998835:web:ecca09c1bb98a5f9a7f946"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+provider.addScope('email');
+
+provider.setCustomParameters({
+  client_id: "346754998835-73m7jztl7omaiiso3uu2sce0veumethc.apps.googleusercontent.com",
+  prompt: "select_account"
+});
+  
+// LOGIN
+window.loginWithGoogle = function () {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      alert("Welcome " + result.user.displayName);
+      console.log("Logged in:", result.user.email);
+    })
+    .catch((error) => {
+      alert("Login Error: " + error.message);
+      console.log(error);
+    });
+};
+
+
+// LOGOUT
+window.logoutUser = function () {
+  signOut(auth).then(() => {
+    alert("Logged out");
+  });
+};
+
+
+// AUTO LOGIN DETECT
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User:", user.email);
+  } else {
+    console.log("No user");
+  }
+});
+
+</script>
+</body></html>
