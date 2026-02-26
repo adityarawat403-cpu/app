@@ -32,7 +32,12 @@ input{flex:1;padding:14px;border-radius:14px;border:none;background:#0e0e14;colo
 .typing{display:flex;gap:4px;padding:10px 14px;background:#1b1b24;border-radius:18px;width:60px;}
 .dot{width:6px;height:6px;background:white;border-radius:50%;animation:blink 1.2s infinite;}
 @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
-</style></head>  <body>  <div id="splash">
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+</head>
+<body>  <div id="splash">
 <img src="icon.png">
 
 <div class="title">REPLYSHASTRA</div>      
@@ -203,19 +208,7 @@ navigator.serviceWorker.register('sw.js');
 </script>
 
  <!-- FIREBASE LOGIN SYSTEM FIXED -->
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-/* CONFIG */
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
   authDomain: "replyshastra.firebaseapp.com",
@@ -225,42 +218,30 @@ const firebaseConfig = {
   appId: "1:346754998835:web:ecca09c1bb98a5f9a7f946"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+firebase.initializeApp(firebaseConfig);
 
-/* LOGIN BUTTON */
-window.loginWithGoogle = function () {
-  signInWithRedirect(auth, provider);
-};
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
-/* AFTER REDIRECT (VERY IMPORTANT) */
-getRedirectResult(auth)
-  .then((result) => {
-    if (result && result.user) {
-      alert("Welcome " + result.user.displayName);
-      console.log("Logged in:", result.user.email);
-    }
-  })
-  .catch((error) => {
-    console.log("Redirect error:", error);
-  });
+/* LOGIN */
+function loginWithGoogle(){
+  auth.signInWithRedirect(provider);
+}
 
-/* LOGOUT */
-window.logoutUser = function () {
-  signOut(auth).then(() => {
-    alert("Logged out successfully");
-  });
-};
-
-/* AUTO LOGIN DETECT */
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Active user:", user.email);
-  } else {
-    console.log("No user logged in");
+/* AFTER REDIRECT */
+firebase.auth().getRedirectResult().then((result)=>{
+  if(result.user){
+    alert("Welcome " + result.user.displayName);
   }
+}).catch((error)=>{
+  console.log(error);
 });
 
+/* LOGOUT */
+function logoutUser(){
+  auth.signOut().then(()=>{
+    alert("Logged out successfully");
+  });
+}
 </script>
 </body></html>
