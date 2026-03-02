@@ -1,64 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReplyShastra Login</title>
-
-<style>
-body{
-background:#050008;
-color:white;
-font-family:Arial;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
-}
-
-.card{
-text-align:center;
-padding:40px;
-background:#140021;
-border-radius:18px;
-box-shadow:0 0 30px #7b2cff55;
-}
-
-h1{
-letter-spacing:3px;
-margin-bottom:25px;
-}
-
-.loginBtn{
-padding:16px 30px;
-border:none;
-border-radius:12px;
-font-size:18px;
-background:linear-gradient(135deg,#7b2cff,#b067ff);
-color:white;
-cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div class="card">
-<h1>REPLYSHASTRA 🔱</h1>
-<p>Continue with Google to start</p>
-<br>
-<button class="loginBtn" id="loginBtn">Login with Google</button>
-</div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
- getAuth,
- GoogleAuthProvider,
- signInWithPopup,
- browserLocalPersistence,
- setPersistence,
- onAuthStateChanged
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -75,32 +23,38 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({
- prompt: "select_account"
+  prompt: "select_account"
 });
 
-// Persistence set
-await setPersistence(auth, browserLocalPersistence);
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-// LOGIN WITH POPUP
 document.getElementById("loginBtn").onclick = async () => {
- try {
-   const result = await signInWithPopup(auth, provider);
-   if(result.user){
-     window.location.href = "app.html";
-   }
- } catch (error) {
-   console.log("Login error:", error);
-   alert("Login failed: " + error.message);
- }
+  try {
+    if (isMobile) {
+      await signInWithRedirect(auth, provider);
+    } else {
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
+        window.location.href = "app.html";
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
 };
 
-// Already logged in user skip login page
-onAuthStateChanged(auth, (user)=>{
- if(user){
-   window.location.href="app.html";
- }
+// Handle redirect result (for mobile)
+getRedirectResult(auth).then((result) => {
+  if (result && result.user) {
+    window.location.href = "app.html";
+  }
+});
+
+// Already logged in
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.href = "app.html";
+  }
 });
 </script>
-
-</body>
-</html>
