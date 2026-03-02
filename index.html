@@ -210,14 +210,12 @@ navigator.serviceWorker.register('sw.js');
  <!-- FIREBASE LOGIN WORKING FINAL -->
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  signOut,
-  onAuthStateChanged
+ getAuth,
+ GoogleAuthProvider,
+ signInWithPopup,
+ signOut,
+ onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -236,23 +234,16 @@ const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
   prompt: "select_account"
 });
-
-/* LOGIN BUTTON */
-window.loginWithGoogle = function () {
-  signInWithRedirect(auth, provider);
-};
-
-/* AFTER GOOGLE RETURNS BACK */
-getRedirectResult(auth)
-.then((result) => {
-  if (result && result.user) {
+window.LoginWithGoogle = async function () {
+  try {
+    const result = await signInWithPopup(auth, provider);
     alert("Welcome " + result.user.displayName);
     console.log("Logged in:", result.user.email);
+  } catch (error) {
+    console.log("Login error:", error);
+    alert("Login failed: " + error.message);
   }
-})
-.catch((error) => {
-  console.log("Redirect error:", error);
-});
+};
 
 /* LOGOUT */
 window.logoutUser = function () {
@@ -271,9 +262,4 @@ onAuthStateChanged(auth, (user) => {
 });
 
 </script>
-<script>
-function loginWithGoogle(){
-  window.loginWithGoogle();
-}
-  </script>
 </body></html>
