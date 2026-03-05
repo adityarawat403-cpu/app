@@ -92,13 +92,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 /* BLOCK DIRECT ACCESS */
-onAuthStateChanged(auth,(user)=>{
+/*onAuthStateChanged(auth,(user)=>{
 if(!user){
 window.location.href="index.html";
 return;
 }
 console.log("Authenticated:",user.email);
-});
+});*/
 
 /* LOGOUT */
 window.logoutUser=function(){
