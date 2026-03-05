@@ -1,7 +1,6 @@
-/* ===== ReplyShastra Service Worker (GitHub Pages /app/ FIX) ===== */
+/* ReplyShastra Service Worker FIX */
 
-const CACHE_NAME = "replyshastra-app-v3";
-const APP_PREFIX = "/app/";
+const CACHE_NAME = "replyshastra-v4";
 
 /* INSTALL */
 self.addEventListener("install", e => {
@@ -27,28 +26,23 @@ self.addEventListener("activate", e => {
 /* FETCH */
 self.addEventListener("fetch", e => {
 
-  const url = new URL(e.request.url);
+  if (e.request.method !== "GET") return;
 
-  // Sirf apni app folder ki files handle kare
-  if (!url.pathname.startsWith(APP_PREFIX)) {
-    return;
-  }
-
-  // HTML files kabhi cache nahi (white screen fix)
-  if (url.pathname.endsWith(".html") || url.pathname === "/app/") {
-    e.respondWith(fetch(e.request));
-    return;
-  }
-
-  // baaki files (audio, images, css, js) cache + network
   e.respondWith(
     caches.match(e.request).then(res => {
       return res || fetch(e.request).then(fetchRes => {
+
         return caches.open(CACHE_NAME).then(cache => {
+
           cache.put(e.request, fetchRes.clone());
+
           return fetchRes;
+
         });
+
       });
+
     })
   );
+
 });
