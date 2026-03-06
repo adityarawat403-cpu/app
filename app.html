@@ -29,6 +29,46 @@ height:100vh;
 overflow:hidden;
 }
 
+/* INTRO SCREEN */
+
+#introScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#140021;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+#introTitle{
+font-size:30px;
+margin-bottom:35px;
+opacity:0;
+animation:introFade 2s forwards;
+}
+
+@keyframes introFade{
+from{opacity:0;transform:translateY(25px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+#enterBtn{
+padding:14px 28px;
+font-size:20px;
+border-radius:14px;
+border:none;
+background:linear-gradient(135deg,#c0c0c0,#ffffff);
+color:black;
+font-weight:600;
+box-shadow:0 0 10px rgba(255,255,255,.7);
+cursor:pointer;
+}
+
 /* HEADER */
 
 .header{
@@ -98,9 +138,7 @@ padding:15px;
 display:flex;
 flex-direction:column;
 gap:12px;
-
 background:url("weapon-bg.png") center/cover no-repeat;
-
 min-height:100%;
 }
 
@@ -153,60 +191,38 @@ color:white;
 /* SILVER BUTTON */
 
 .sendBtn{
-
 padding:12px 18px;
 border:none;
 border-radius:14px;
-
 background:linear-gradient(135deg,#c0c0c0,#ffffff);
-
 color:black;
-
 font-weight:600;
-
 box-shadow:0 0 8px rgba(255,255,255,.6);
-
 cursor:pointer;
-
 }
 
 /* TYPING */
 
 .typing{
-
 display:flex;
 gap:4px;
-
 padding:10px 14px;
-
 background:#1b1b24;
-
 border-radius:18px;
-
 width:60px;
-
 }
 
 .dot{
-
 width:6px;
-
 height:6px;
-
 background:white;
-
 border-radius:50%;
-
 animation:blink 1.2s infinite;
-
 }
 
 @keyframes blink{
-
 0%,80%,100%{opacity:.2}
-
 40%{opacity:1}
-
 }
 
 </style>
@@ -215,20 +231,23 @@ animation:blink 1.2s infinite;
 
 <body>
 
+<!-- INTRO -->
+
+<div id="introScreen">
+<h1 id="introTitle">Welcome To ReplyShastra</h1>
+<button id="enterBtn">Enter</button>
+</div>
+
+<audio id="introSound" src="intro.mp3"></audio>
+
 <!-- MENU -->
 
 <div id="menu" class="sideMenu">
-
 <a href="javascript:void(0)" onclick="shareApp()">Share App</a>
-
 <a href="privacy.html">Privacy</a>
-
 <a href="terms.html">Terms & Conditions</a>
-
 <hr style="opacity:.2;margin:25px 0;">
-
 <a href="javascript:void(0)" onclick="logoutUser()">Logout</a>
-
 </div>
 
 <div id="menuOverlay"></div>
@@ -236,13 +255,9 @@ animation:blink 1.2s infinite;
 <!-- HEADER -->
 
 <div class="header">
-
 <div class="menuBtn" onclick="toggleMenu()">☰</div>
-
 <div class="logo"><img src="icon.png"></div>
-
 <div>ReplyShastra</div>
-
 </div>
 
 <!-- CHAT -->
@@ -252,55 +267,60 @@ animation:blink 1.2s infinite;
 <!-- INPUT -->
 
 <div class="inputArea">
-
 <input id="text" placeholder="Describe your situation...">
-
 <button class="sendBtn" onclick="send()">Send</button>
-
 </div>
 
 <!-- AUDIO -->
 
 <audio id="sendSound" src="send.mp3"></audio>
-
 <audio id="replySound" src="reply.mp3"></audio>
-
 <audio id="typingSound" src="typing.mp3"></audio>
 
 <script>
+
+/* INTRO */
+
+document.getElementById("enterBtn").onclick=function(){
+
+document.getElementById("introSound").play();
+
+setTimeout(()=>{
+document.getElementById("introScreen").style.display="none";
+},1500);
+
+};
+
+/* MENU */
 
 let menuOpen=false;
 
 function toggleMenu(){
 
 const menu=document.getElementById("menu");
-
 const overlay=document.getElementById("menuOverlay");
 
 menuOpen=!menuOpen;
 
 menu.style.left=menuOpen?"0":"-260px";
-
 overlay.style.display=menuOpen?"block":"none";
 
 }
 
 document.getElementById("menuOverlay").onclick=toggleMenu;
 
-const chat=document.getElementById("chat");
+/* CHAT */
 
+const chat=document.getElementById("chat");
 const text=document.getElementById("text");
 
 function addMessage(t,type){
 
 let div=document.createElement("div");
-
 div.className="msg "+type;
-
 div.innerText=t;
 
 chat.appendChild(div);
-
 chat.scrollTop=chat.scrollHeight;
 
 }
@@ -308,15 +328,12 @@ chat.scrollTop=chat.scrollHeight;
 function showTyping(){
 
 let typing=document.createElement("div");
-
 typing.className="typing";
-
 typing.id="typing";
 
 typing.innerHTML="<div class='dot'></div><div class='dot'></div><div class='dot'></div>";
 
 chat.appendChild(typing);
-
 chat.scrollTop=chat.scrollHeight;
 
 }
@@ -324,7 +341,6 @@ chat.scrollTop=chat.scrollHeight;
 function removeTyping(){
 
 let t=document.getElementById("typing");
-
 if(t)t.remove();
 
 }
@@ -332,7 +348,6 @@ if(t)t.remove();
 function send(){
 
 let msg=text.value.trim();
-
 if(!msg)return;
 
 document.getElementById("sendSound").play();
@@ -358,9 +373,7 @@ addMessage("I understand your situation. Try:\n\nHey… I didn’t want to reply
 }
 
 text.addEventListener("keypress",e=>{
-
 if(e.key==="Enter")send();
-
 });
 
 </script>
@@ -370,41 +383,28 @@ if(e.key==="Enter")send();
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
-
 apiKey:"AIzaSyABvBLrB9KBCJV1YS-8t3SJrqHUfPqB-7LMo",
-
 authDomain:"replyshastra.firebaseapp.com",
-
 projectId:"replyshastra",
-
 storageBucket:"replyshastra.appspot.com",
-
 messagingSenderId:"346754998835",
-
 appId:"1:346754998835:web:ecca09c1bb98a5f9a7f946"
-
 };
 
 const app=initializeApp(firebaseConfig);
-
 const auth=getAuth(app);
 
 window.logoutUser=function(){
-
 signOut(auth).then(()=>{
-
 window.location.href="index.html";
-
 });
-
 };
 
 </script>
 
 </body>
 
-</html>
+</html>wa
