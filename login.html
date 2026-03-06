@@ -1,0 +1,56 @@
+<!DOCTYPE html><html>
+<head><meta name="viewport" content="width=device-width,initial-scale=1"><title>ReplyShastra Login</title><style>
+
+body{
+background:#0a0015;
+font-family:Quicksand;
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh;
+color:white;
+}
+
+.card{
+background:#140021;
+padding:40px;
+border-radius:18px;
+width:300px;
+text-align:center;
+box-shadow:0 0 25px #7b2cff55;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:12px;
+border-radius:10px;
+border:none;
+background:#0d0d14;
+color:white;
+}
+
+button{
+margin-top:18px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#7b2cff,#b067ff);
+color:white;
+font-weight:600;
+}
+
+</style></head><body><div class="card"><h2>ReplyShastra</h2><p>AI Relationship Reply Generator</p><input placeholder="Email"><input placeholder="Password" type="password"><button onclick="login()">Login</button>
+
+</div><script>
+
+function login(){
+
+localStorage.setItem("rs_user","1")
+
+window.location="intro.html"
+
+}
+
+</script></body></html>
