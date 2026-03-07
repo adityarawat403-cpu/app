@@ -9,17 +9,23 @@
 
 <script>
 
-if(localStorage.getItem("rs_user")){
-window.location.href="intro.html"
+document.addEventListener("DOMContentLoaded", function(){
+
+let user = localStorage.getItem("rs_user");
+
+if(user){
+window.location.replace("intro.html");
 }else{
-window.location.href="login.html"
+window.location.replace("login.html");
 }
+
+});
 
 </script>
 
 </head>
 
-<body>
+<body style="background:#090013;color:white;font-family:sans-serif;text-align:center;padding-top:40vh">
 
 Loading ReplyShastra...
 
