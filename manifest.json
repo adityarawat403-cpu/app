@@ -1,22 +1,24 @@
 {
-  "name": "ReplyShastra",
+  "name": "ReplyShastra AI",
   "short_name": "ReplyShastra",
-  "start_url": "/app/index.html",
-  "scope": "/app/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0b0014",
+  "background_color": "#050008",
   "theme_color": "#7b2cff",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/app/icon.png",
+      "src": "icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/app/icon.png",
+      "src": "icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
