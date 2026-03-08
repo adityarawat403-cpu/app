@@ -190,6 +190,58 @@ animation:blink 1.2s infinite;
 40%{opacity:1}
 }
 
+/* INSTALL POPUP */
+
+.installPopup{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#140021;
+padding:18px;
+border-top-left-radius:20px;
+border-top-right-radius:20px;
+display:none;
+align-items:center;
+gap:14px;
+z-index:200;
+box-shadow:0 -5px 25px rgba(0,0,0,.5);
+}
+
+.installPopup img{
+width:42px;
+border-radius:10px;
+}
+
+.installText{
+flex:1;
+}
+
+.installText h3{
+font-size:16px;
+}
+
+.installText p{
+font-size:12px;
+opacity:.7;
+}
+
+.installBtn{
+background:#7b2cff;
+border:none;
+padding:8px 14px;
+border-radius:10px;
+color:white;
+cursor:pointer;
+}
+
+.laterBtn{
+background:none;
+border:none;
+color:#bbb;
+cursor:pointer;
+}
+
 </style>
 
 </head>
@@ -241,6 +293,23 @@ animation:blink 1.2s infinite;
 <input id="text" placeholder="Describe your situation...">
 
 <button class="sendBtn" onclick="send()">Send</button>
+
+</div>
+
+<!-- INSTALL POPUP -->
+
+<div id="installPopup" class="installPopup">
+
+<img src="icon.png">
+
+<div class="installText">
+<h3>Install ReplyShastra</h3>
+<p>Faster access. Works like real app.</p>
+</div>
+
+<button class="installBtn" onclick="installApp()">Install</button>
+
+<button class="laterBtn" onclick="closeInstall()">Later</button>
 
 </div>
 
@@ -382,13 +451,19 @@ addMessage("AI error. Try again.","bot")
 
 }
 
+/* INSTALL SYSTEM */
+
 let deferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener('beforeinstallprompt',(e)=>{
 
 e.preventDefault();
 
-deferredPrompt = e;
+deferredPrompt=e;
+
+setTimeout(()=>{
+document.getElementById("installPopup").style.display="flex"
+},3000)
 
 });
 
@@ -398,15 +473,9 @@ if(deferredPrompt){
 
 deferredPrompt.prompt();
 
-deferredPrompt.userChoice.then((choiceResult) => {
+deferredPrompt.userChoice.then(()=>{
 
-if(choiceResult.outcome === 'accepted'){
-
-console.log('User installed the app');
-
-}
-
-deferredPrompt = null;
+document.getElementById("installPopup").style.display="none"
 
 });
 
@@ -415,6 +484,12 @@ deferredPrompt = null;
 alert("Install option not available. Please use browser menu.");
 
 }
+
+}
+
+function closeInstall(){
+
+document.getElementById("installPopup").style.display="none"
 
 }
 
@@ -447,7 +522,7 @@ alert("Share not supported on this device")
 }
 
 }
-  
+
 </script>
 
 </body>
