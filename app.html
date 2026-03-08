@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>ReplyShastra AI</title>
-
-<link rel="manifest" href="manifest.json">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>ReplyShastra AI</title><link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7b2cff">
-<link rel="icon" href="icon.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
+<link rel="icon" href="icon.png"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet"><style>
 
 *{
 margin:0;
@@ -58,7 +45,7 @@ border-radius:10px;
 
 .username{
 margin-left:auto;
-font-size:14px;
+font-size:13px;
 opacity:.8;
 }
 
@@ -85,8 +72,6 @@ text-decoration:none;
 color:white;
 }
 
-/* USER BLOCK */
-
 .userBlock{
 margin-top:60px;
 padding-bottom:15px;
@@ -101,10 +86,7 @@ font-weight:600;
 .userPlan{
 font-size:13px;
 opacity:.7;
-margin-top:3px;
 }
-
-/* INSTALL BUTTON */
 
 .installBtnMenu{
 margin-top:25px;
@@ -113,10 +95,6 @@ text-align:center;
 background:linear-gradient(135deg,#7b2cff,#b067ff);
 border-radius:10px;
 font-weight:600;
-}
-
-.installBtnMenu a{
-margin:0;
 }
 
 #menuOverlay{
@@ -148,7 +126,6 @@ max-width:78%;
 padding:12px 15px;
 border-radius:18px;
 font-size:15px;
-animation:fadeIn .3s ease;
 }
 
 .user{
@@ -160,6 +137,15 @@ background:linear-gradient(135deg,#7b2cff,#b067ff);
 align-self:flex-start;
 background:#1b1b24;
 border:1px solid rgba(255,255,255,.1);
+}
+
+/* COPY BUTTON */
+
+.copyBtn{
+margin-top:6px;
+font-size:12px;
+opacity:.7;
+cursor:pointer;
 }
 
 /* TYPING */
@@ -218,23 +204,43 @@ font-weight:600;
 cursor:pointer;
 }
 
-</style>
+/* INSTALL POPUP */
 
-</head>
+.installPopup{
+position:fixed;
+bottom:-120px;
+left:0;
+right:0;
+background:#140021;
+padding:16px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+transition:.4s;
+z-index:200;
+}
 
-<body>
+.installPopup.show{
+bottom:0;
+}
 
-<div id="menu" class="sideMenu">
+.installPopup button{
+border:none;
+padding:8px 14px;
+border-radius:8px;
+background:#7b2cff;
+color:white;
+cursor:pointer;
+}
 
-<!-- USER INFO -->
+.installPopup .later{
+background:#444;
+}
 
-<div class="userBlock">
+</style></head><body><div id="menu" class="sideMenu"><div class="userBlock">
 <div id="menuName" class="userName">User</div>
 <div class="userPlan">Free Plan</div>
-</div>
-
-<a href="#">Subscription</a>
-
+</div><a href="#">Subscription</a>
 <a href="#" onclick="shareApp()">Share App</a>
 <a href="about.html">About</a>
 <a href="privacy.html">Privacy</a>
@@ -242,40 +248,17 @@ cursor:pointer;
 
 <div class="installBtnMenu">
 <a href="#" onclick="installApp()">⬇ Install ReplyShastra</a>
-</div>
+</div><hr style="opacity:.2;margin:25px 0;"><a href="#" onclick="logout()">Logout</a>
 
-<hr style="opacity:.2;margin:25px 0;">
-
-<a href="#" onclick="logout()">Logout</a>
-
-</div>
-
-<div id="menuOverlay"></div>
-
-<div class="header">
-
-<div class="menuBtn" onclick="toggleMenu()">☰</div>
-
-<div class="logo">
+</div><div id="menuOverlay"></div><div class="header"><div class="menuBtn" onclick="toggleMenu()">☰</div><div class="logo">
 <img src="icon.png">
-</div>
+</div><div>ReplyShastra</div><div id="username" class="username"></div></div><div id="chat" class="chatbox"></div><div class="inputArea"><input id="text" placeholder="Describe your situation...">
+<button class="sendBtn" onclick="send()">Send</button></div><div id="installPopup" class="installPopup"><span>Install ReplyShastra for faster access</span>
 
-<div>ReplyShastra</div>
-
-<div id="username" class="username"></div>
-
-</div>
-
-<div id="chat" class="chatbox"></div>
-
-<div class="inputArea">
-
-<input id="text" placeholder="Describe your situation...">
-<button class="sendBtn" onclick="send()">Send</button>
-
-</div>
-
-<audio id="sendSound" src="send.mp3"></audio>
+<div>
+<button onclick="installApp()">Install</button>
+<button class="later" onclick="closeInstall()">Later</button>
+</div></div><audio id="sendSound" src="send.mp3"></audio>
 <audio id="replySound" src="reply.mp3"></audio>
 <audio id="typingSound" src="typing.mp3"></audio>
 
@@ -287,14 +270,19 @@ if(!userEmail){
 window.location="login.html"
 }
 
-if(userEmail){
-
 const name=userEmail.split("@")[0]
 
 document.getElementById("username").innerText=name
 document.getElementById("menuName").innerText=name
 
+let repliesLeft=localStorage.getItem("replies_left")
+
+if(!repliesLeft){
+repliesLeft=10
+localStorage.setItem("replies_left",10)
 }
+
+document.getElementById("username").innerText=name+" | "+repliesLeft+" left"
 
 let menuOpen=false
 
@@ -321,7 +309,19 @@ let div=document.createElement("div")
 div.className="msg "+type
 div.innerText=msg
 
+if(type==="bot"){
+
+let copy=document.createElement("div")
+copy.className="copyBtn"
+copy.innerText="Copy"
+copy.onclick=()=>navigator.clipboard.writeText(msg)
+
+div.appendChild(copy)
+
+}
+
 chat.appendChild(div)
+
 chat.scrollTop=chat.scrollHeight
 
 }
@@ -337,9 +337,7 @@ typing.innerHTML="<div class='dot'></div><div class='dot'></div><div class='dot'
 
 chat.appendChild(typing)
 
-try{
 document.getElementById("typingSound").play()
-}catch{}
 
 }
 
@@ -352,13 +350,18 @@ if(t)t.remove()
 
 function send(){
 
+if(repliesLeft<=0){
+
+addMessage("Daily reply limit reached.","bot")
+return
+
+}
+
 let msg=text.value.trim()
 
 if(!msg)return
 
-try{
 document.getElementById("sendSound").play()
-}catch{}
 
 addMessage(msg,"user")
 
@@ -370,17 +373,17 @@ setTimeout(()=>{
 
 removeTyping()
 
-let reply =
-"Advice:\nBe honest and apologise.\n\n"+
-"Reply 1:\nI'm really sorry I forgot your birthday. You mean a lot to me and I want to make it up to you.\n\n"+
-"Reply 2:\nI know I messed up forgetting your birthday. I'm truly sorry and I'd love to make it special for you.\n\n"+
-"Reply 3:\nI hate that I forgot your birthday. You deserve better and I'm really sorry.";
+let reply="Example reply generated by AI."
 
 addMessage(reply,"bot")
 
-try{
 document.getElementById("replySound").play()
-}catch{}
+
+repliesLeft--
+
+localStorage.setItem("replies_left",repliesLeft)
+
+document.getElementById("username").innerText=name+" | "+repliesLeft+" left"
 
 },1200)
 
@@ -409,7 +412,7 @@ url:"https://replyshastra.web.app"
 
 }else{
 
-alert("Share not supported on this device")
+alert("Share not supported")
 
 }
 
@@ -418,29 +421,35 @@ alert("Share not supported on this device")
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt',(e)=>{
-e.preventDefault();
-deferredPrompt=e;
-});
+e.preventDefault()
+deferredPrompt=e
+
+setTimeout(()=>{
+document.getElementById("installPopup").classList.add("show")
+},4000)
+
+})
 
 function installApp(){
 
 if(deferredPrompt){
 
-deferredPrompt.prompt();
+deferredPrompt.prompt()
 
 deferredPrompt.userChoice.then(()=>{
-deferredPrompt=null;
-});
-
-}else{
-
-alert("Install option not available. Use browser menu.");
+deferredPrompt=null
+closeInstall()
+})
 
 }
 
 }
 
-</script>
+function closeInstall(){
 
-</body>
+document.getElementById("installPopup").classList.remove("show")
+
+}
+
+</script></body>
 </html>
