@@ -13,7 +13,7 @@ justify-content:center;
 min-height:100vh;
 color:white;
 margin:0;
-padding:15px;
+padding:20px;
 }
 
 /* CARD */
@@ -25,12 +25,12 @@ border-radius:20px;
 width:100%;
 max-width:340px;
 text-align:center;
-box-shadow:0 0 35px rgba(123,44,255,0.45);
+box-shadow:0 0 35px rgba(123,44,255,0.5);
 transition:0.3s;
 }
 
 .card:hover{
-box-shadow:0 0 45px rgba(123,44,255,0.7);
+box-shadow:0 0 55px rgba(123,44,255,0.8);
 }
 
 /* LOGO */
@@ -85,7 +85,7 @@ background:#1b1b24;
 box-shadow:0 0 12px #444;
 }
 
-/* OR */
+/* OR TEXT */
 
 .or{
 margin:16px 0;
@@ -114,11 +114,8 @@ function login(){
 let user=document.getElementById("username").value
 
 if(!user){
-
 alert("Enter username")
-
 return
-
 }
 
 localStorage.setItem("rs_user",user)
@@ -132,7 +129,6 @@ window.location="app.html"
 function showCreate(){
 
 document.getElementById("loginBox").style.display="none"
-
 document.getElementById("createBox").style.display="block"
 
 }
@@ -140,29 +136,22 @@ document.getElementById("createBox").style.display="block"
 function showLogin(){
 
 document.getElementById("loginBox").style.display="block"
-
 document.getElementById("createBox").style.display="none"
 
 }
 
-/* SIGNUP OPTIONS */
+/* SIGNUP PLACEHOLDERS */
 
 function phoneSignup(){
-
 alert("Phone signup coming soon")
-
 }
 
 function emailSignup(){
-
 alert("Email signup coming soon")
-
 }
 
 function googleSignup(){
-
 alert("Google signup coming soon")
-
 }
 
 </script></body></html>
