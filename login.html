@@ -12,14 +12,12 @@ margin:0;
 }
 
 .card{
-
 background:#140021;
 padding:35px;
 border-radius:18px;
 width:320px;
 text-align:center;
 box-shadow:0 0 25px #7b2cff55;
-
 }
 
 .logo{
@@ -27,12 +25,7 @@ width:70px;
 margin-bottom:10px;
 }
 
-h2{
-margin:5px 0;
-}
-
 input{
-
 width:100%;
 padding:12px;
 margin-top:12px;
@@ -40,11 +33,9 @@ border-radius:10px;
 border:none;
 background:#0d0d14;
 color:white;
-
 }
 
 button{
-
 margin-top:15px;
 width:100%;
 padding:12px;
@@ -54,57 +45,39 @@ background:linear-gradient(135deg,#7b2cff,#b067ff);
 color:white;
 font-weight:600;
 cursor:pointer;
+}
+
+</style></head><body><div class="card"><img src="icon.png" class="logo"><h2>ReplyShastra</h2><p>AI Relationship Coach</p><div id="phoneBox"><input id="phone" placeholder="Phone Number"><button onclick="sendOTP()">Send OTP</button>
+
+</div><div id="otpBox" style="display:none"><input id="otp" placeholder="Enter OTP"><button onclick="verifyOTP()">Verify</button>
+
+</div><div id="nameBox" style="display:none"><input id="name" placeholder="Your Name"><button onclick="finish()">Continue</button>
+
+</div></div><script>
+
+function sendOTP(){
+
+document.getElementById("phoneBox").style.display="none"
+document.getElementById("otpBox").style.display="block"
 
 }
 
-.switch{
+function verifyOTP(){
 
-margin-top:12px;
-font-size:13px;
-cursor:pointer;
-opacity:.7;
+document.getElementById("otpBox").style.display="none"
+document.getElementById("nameBox").style.display="block"
 
 }
 
-</style></head><body><div class="card"><img src="icon.png" class="logo"><h2>ReplyShastra</h2><p>AI Relationship Coach</p><div id="signupBox"><input id="name" placeholder="Full Name"><input id="phone" placeholder="Phone Number"><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button onclick="signup()">Create Account</button>
-
-<p class="switch" onclick="showLogin()">Already have account? Login</p></div><div id="loginBox" style="display:none"><input id="loginEmail" placeholder="Email"><input id="loginPass" type="password" placeholder="Password"><button onclick="login()">Login</button>
-
-<p class="switch" onclick="showSignup()">Create new account</p></div></div><script>
-
-function showLogin(){
-
-document.getElementById("signupBox").style.display="none"
-document.getElementById("loginBox").style.display="block"
-
-}
-
-function showSignup(){
-
-document.getElementById("signupBox").style.display="block"
-document.getElementById("loginBox").style.display="none"
-
-}
-
-function signup(){
+function finish(){
 
 let name=document.getElementById("name").value
-let email=document.getElementById("email").value
+let phone=document.getElementById("phone").value
 
-localStorage.setItem("rs_user",email)
+localStorage.setItem("rs_user",phone)
 localStorage.setItem("rs_name",name)
 
-window.location="intro.html"
-
-}
-
-function login(){
-
-let email=document.getElementById("loginEmail").value
-
-localStorage.setItem("rs_user",email)
-
-window.location="intro.html"
+window.location="app.html"
 
 }
 
