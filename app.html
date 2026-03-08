@@ -332,42 +332,28 @@ chat.scrollTop=chat.scrollHeight
 async function send(){
 
 let msg=text.value.trim()
+
 if(!msg)return
 
 addMessage(msg,"user")
+
 text.value=""
 
-try{
+showTyping()
 
-const res=await fetch("https://api.openai.com/v1/chat/completions",{
+setTimeout(()=>{
 
-method:"POST",
+removeTyping()
 
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer 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"
-},
+let reply =
+"Advice:\nBe honest and apologise.\n\n"+
+"Reply 1:\nI'm really sorry I forgot your birthday. You mean a lot to me and I want to make it up to you.\n\n"+
+"Reply 2:\nI know I messed up forgetting your birthday. I'm truly sorry and I'd love to make it special for you.\n\n"+
+"Reply 3:\nI hate that I forgot your birthday. You deserve better and I'm really sorry.";
 
-body:JSON.stringify({
+addMessage(reply,"bot")
 
-model:"gpt-4o-mini",
-
-messages:[
-{role:"system",content:"You are ReplyShastra AI relationship coach."},
-{role:"user",content:msg}
-]
-
-})
-
-})
-
-const data=await res.json()
-
-addMessage(data.choices[0].message.content,"bot")
-
-}catch{
-
-addMessage("AI error. Try again.","bot")
+},1200)
 
 }
 
