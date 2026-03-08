@@ -382,6 +382,42 @@ addMessage("AI error. Try again.","bot")
 
 }
 
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+});
+
+function installApp(){
+
+if(deferredPrompt){
+
+deferredPrompt.prompt();
+
+deferredPrompt.userChoice.then((choiceResult) => {
+
+if(choiceResult.outcome === 'accepted'){
+
+console.log('User installed the app');
+
+}
+
+deferredPrompt = null;
+
+});
+
+}else{
+
+alert("Install option not available. Please use browser menu.");
+
+}
+
+}
+
 text.addEventListener("keypress",e=>{
 if(e.key==="Enter")send()
 })
